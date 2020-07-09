@@ -6,7 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
+
+
+
 Future<void> main() async {
+  
   // Ensure that plugin services are initialized so that `availableCameras()`
   // can be called before `runApp()`
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +40,7 @@ Future<void> main() async {
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
   final CameraDescription camera;
+  
 
   const TakePictureScreen({
     Key key,
@@ -44,6 +52,7 @@ class TakePictureScreen extends StatefulWidget {
 }
 
 class TakePictureScreenState extends State<TakePictureScreen> {
+  
   CameraController _controller;
   Future<void> _initializeControllerFuture;
 
@@ -115,7 +124,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(imagePath: path),
+                builder: (context) => GeneratePage(imagePath: path),
               ),
             );
           } catch (e) {
@@ -127,20 +136,105 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     );
   }
 }
-
-// A widget that displays the picture taken by the user.
-class DisplayPictureScreen extends StatelessWidget {
+class GeneratePage extends StatefulWidget {
   final String imagePath;
+  const GeneratePage({Key key, this.imagePath}) : super(key: key);
+  
 
-  const DisplayPictureScreen({Key key, this.imagePath}) : super(key: key);
+  @override
+  _GeneratePageState createState() => _GeneratePageState();
+}
+// A widget that displays the picture taken by the user.
+@override
+class _GeneratePageState extends State<GeneratePage> {
+ 
+
+  final pw.Document pdf = pw.Document();
+  
+  bool doneProcessing = false;
+  int pageCount = 0;
+  int totalPage = 1;
+  String appDocPath;
+  String searchText;
+
+  @override
+  void initState() {
+ 
+    initiateScraping(PdfPageFormat.a4);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    String imageUrl = widget.imagePath;
     return Scaffold(
-      appBar: AppBar(title: Text('Display the Picture')),
-      // The image is stored as a file on the device. Use the `Image.file`
-      // constructor with the given path to display the image.
-      body: Image.file(File(imagePath)),
+      body: Center(
+        child: doneProcessing
+            ? Center(
+                child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  IconButton(
+                    onPressed: () {
+                      sharePdf();
+                    },
+                    icon: Icon(Icons.share),
+                    iconSize: 50,
+                  ),
+                  RaisedButton(
+                      child: const Text('Print Document'),
+                      onPressed: () {
+                        _printPdf();
+                      })
+                ],
+              ))
+            : Center(
+                child: Text(
+                  "$imageUrl",
+                  style: TextStyle(fontSize: 50, fontWeight: FontWeight.w300),
+                ),
+              ),
+      ),
     );
   }
+
+  Future initiateScraping(PdfPageFormat format) async {
+   
+    String imageUrl = widget.imagePath;
+
+    
+    await addPage(pdf, format, imageUrl);
+  }
+
+  Future<void> addPage(
+      pw.Document pdf, PdfPageFormat format, String imageUrl) async {
+    final File file = new File(imageUrl);
+    final PdfImage image = await pdfImageFromImageProvider(
+        pdf: pdf.document, image: FileImage(file));
+
+    pdf.addPage(pw.Page(build: (pw.Context context) {
+      return pw.Center(
+        child: pw.Image(image),
+      );
+    }));
+    setState(() {
+      
+      if (imageUrl != '') doneProcessing = true;
+    });
+  }
+
+  void _printPdf() {
+    Printing.layoutPdf(onLayout: (PdfPageFormat format) async {
+      await initiateScraping(format);
+      return pdf.save();
+    });
+  }
+
+  Future sharePdf() async {
+
+    await Printing.sharePdf(
+        bytes: pdf.save(), filename: '${DateTime.now()}.pdf');
+  }
 }
+  
