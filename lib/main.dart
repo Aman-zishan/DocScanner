@@ -12,6 +12,7 @@ import 'package:printing/printing.dart';
 
 
 
+
 Future<void> main() async {
   
   // Ensure that plugin services are initialized so that `availableCameras()`
@@ -37,6 +38,7 @@ Future<void> main() async {
   );
 }
 
+
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
   final CameraDescription camera;
@@ -50,6 +52,7 @@ class TakePictureScreen extends StatefulWidget {
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
 }
+
 
 class TakePictureScreenState extends State<TakePictureScreen> {
   
@@ -65,7 +68,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       // Get a specific camera from the list of available cameras.
       widget.camera,
       // Define the resolution to use.
-      ResolutionPreset.medium,
+      ResolutionPreset.ultraHigh,
     );
 
     // Next, initialize the controller. This returns a Future.
@@ -78,16 +81,33 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     _controller.dispose();
     super.dispose();
   }
+   
 
+    
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('DocScanner')),
+      appBar: AppBar(title: Text('DocScanner',style: TextStyle(color: Colors.black),),actions: <Widget>[
+    IconButton(
+      icon: Icon(
+        Icons.menu,
+        color: Colors.black,
+      ),
+      onPressed: () {
+        // do something
+      },
+    )
+  ],
+      backgroundColor: Colors.white
+      ),
+      
       // Wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner
       // until the controller has finished initializing.
       body: FutureBuilder<void>(
+        
         future: _initializeControllerFuture,
+        
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             // If the Future is complete, display the preview.
@@ -98,8 +118,11 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           }
         },
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.camera_alt),
+        backgroundColor: Colors.lightBlueAccent,
+        
+        child: Icon(Icons.camera_alt,),
         // Provide an onPressed callback.
         onPressed: () async {
           // Take the Picture in a try / catch block. If anything goes wrong,
@@ -132,7 +155,40 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             print(e);
           }
         },
+        elevation: 2.0,
+        
       ),
+      
+    
+    
+    bottomNavigationBar: BottomAppBar(
+      
+      
+    child: Container(
+      height: 150,
+      
+      child: Row(
+        
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        
+          
+        
+       
+        Expanded(child: Container(alignment:Alignment.center,child: Icon(Icons.photo, color: Colors.black, size: 30,),),),
+        Expanded(child: Container(alignment:Alignment.center,child: Icon(Icons.attach_file, color: Colors.black,size: 30,),),),
+        
+      ],
+    ),
+    ),
+    shape: CircularNotchedRectangle(),
+    notchMargin: 4.0,
+    color: Colors.white,
+    
+    
+  ),
+ 
     );
   }
 }
@@ -168,6 +224,19 @@ class _GeneratePageState extends State<GeneratePage> {
   Widget build(BuildContext context) {
     String imageUrl = widget.imagePath;
     return Scaffold(
+            appBar: AppBar(title: Text('DocScanner',style: TextStyle(color: Colors.black),),actions: <Widget>[
+    IconButton(
+      icon: Icon(
+        Icons.menu,
+        color: Colors.black,
+      ),
+      onPressed: () {
+        // do something
+      },
+    )
+  ],
+      backgroundColor: Colors.white
+      ),
       body: Center(
         child: doneProcessing
             ? Center(
@@ -191,7 +260,7 @@ class _GeneratePageState extends State<GeneratePage> {
               ))
             : Center(
                 child: Text(
-                  "$imageUrl",
+                  "Oops..something went wrong",
                   style: TextStyle(fontSize: 50, fontWeight: FontWeight.w300),
                 ),
               ),
