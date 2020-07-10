@@ -18,9 +18,9 @@
 
 ## Phase-1
 
-<p align="center"><img width="25%" height="25%" src="1.png">         <mg width="25%" height="25%" src="2.png" ></p>
+<p align="center"><img width="25%" height="25%" src="1.png">         <img width="25%" height="25%" src="2.png" ></p>
   
   
 ## Phase-2
 
-<p align="center"><img width="25%" height="25%" src="3.png">         <mg width="25%" height="25%" src="4.png" ></p>
+<p align="center"><img width="25%" height="25%" src="3.png">         <img width="25%" height="25%" src="4.png" ></p>
