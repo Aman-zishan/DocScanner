@@ -119,8 +119,14 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton:Container(
+        height: 80.0,
+        width: 80.0,
+        child: FittedBox(
+         child: FloatingActionButton(
+        
         backgroundColor: Colors.lightBlueAccent,
+       
         
         child: Icon(Icons.camera_alt,),
         // Provide an onPressed callback.
@@ -154,9 +160,12 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             // If an error occurs, log the error to the console.
             print(e);
           }
+         
         },
         elevation: 2.0,
         
+      ),
+        ),
       ),
       
     
@@ -176,8 +185,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           
         
        
-        Expanded(child: Container(alignment:Alignment.center,child: Icon(Icons.photo, color: Colors.black, size: 30,),),),
-        Expanded(child: Container(alignment:Alignment.center,child: Icon(Icons.attach_file, color: Colors.black,size: 30,),),),
+        Expanded(child: Container(alignment:Alignment.center,child: Icon(Icons.filter_b_and_w, color: Colors.black, size: 30,),),),
+        
+        Expanded(child: Container(alignment:Alignment.center,child: Icon(Icons.filter, color: Colors.black,size: 30,),),),
         
       ],
     ),
