@@ -9,6 +9,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
+import 'package:edge_detection/edge_detection.dart';
+
 
 
 
@@ -56,6 +58,7 @@ class TakePictureScreen extends StatefulWidget {
 
 class TakePictureScreenState extends State<TakePictureScreen> {
   
+  
   CameraController _controller;
   Future<void> _initializeControllerFuture;
 
@@ -87,18 +90,12 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: AppBar(title: Text('DocScanner',style: TextStyle(color: Colors.black),),actions: <Widget>[
-    IconButton(
-      icon: Icon(
-        Icons.menu,
-        color: Colors.black,
-      ),
-      onPressed: () {
-        // do something
-      },
-    )
+  
   ],
-      backgroundColor: Colors.white
+      backgroundColor: Colors.white,
+      iconTheme: new IconThemeData(color: Colors.black),
       ),
       
       // Wait until the controller is initialized before displaying the
@@ -135,6 +132,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           // catch the error.
           try {
             // Ensure that the camera is initialized.
+            
             await _initializeControllerFuture;
 
             // Construct the path where the image should be saved using the
@@ -168,7 +166,72 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         ),
       ),
       
-    
+    drawer: Drawer(
+        // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
+      
+            elevation: 1.5,
+            child: Column(children: <Widget>[
+              DrawerHeader(
+                
+                  margin: EdgeInsets.zero,
+                 padding: EdgeInsets.zero,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      
+                  image: AssetImage("images/logo.png"),
+                  fit: BoxFit.cover),
+                
+                
+              ),
+              ),
+              
+            
+            ListTile(
+            
+              title: Text('Features'),
+              
+            
+              onTap: () {
+                
+
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                
+              },
+            ),
+
+            ListTile(
+            
+              title: Text('- Convert image to pdf\n- Share pdf\n- Print pdf'),
+              
+            
+              onTap: () {
+                
+
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                
+              },
+            ),
+            ListTile(
+              title: Text('v1.0.0(beta)'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+               
+              },
+            ),
+            ListTile(
+              title: Text('©AmanZishan'),
+            ),
+          ],
+        ),
+      ),
     
     bottomNavigationBar: BottomAppBar(
       
@@ -235,16 +298,9 @@ class _GeneratePageState extends State<GeneratePage> {
     String imageUrl = widget.imagePath;
     return Scaffold(
             appBar: AppBar(title: Text('DocScanner',style: TextStyle(color: Colors.black),),actions: <Widget>[
-    IconButton(
-      icon: Icon(
-        Icons.menu,
-        color: Colors.black,
-      ),
-      onPressed: () {
-        // do something
-      },
-    )
+
   ],
+  iconTheme: new IconThemeData(color: Colors.black),
       backgroundColor: Colors.white
       ),
       body: Center(
@@ -269,11 +325,78 @@ class _GeneratePageState extends State<GeneratePage> {
                 ],
               ))
             : Center(
-                child: Text(
-                  "Oops..something went wrong",
-                  style: TextStyle(fontSize: 50, fontWeight: FontWeight.w300),
-                ),
+                child: CircularProgressIndicator()
+                 
+                
               ),
+      ),
+          drawer: Drawer(
+        // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
+      
+            elevation: 1.5,
+            child: Column(children: <Widget>[
+              DrawerHeader(
+                
+                  margin: EdgeInsets.zero,
+                 padding: EdgeInsets.zero,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      
+                  image: AssetImage("images/logo.png"),
+                  fit: BoxFit.cover),
+                
+                
+              ),
+              ),
+              
+            
+
+
+            ListTile(
+            
+              title: Text('Features'),
+              
+            
+              onTap: () {
+                
+
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                
+              },
+            ),
+
+            ListTile(
+            
+              title: Text('- Convert image to pdf\n- Share pdf\n- Print pdf'),
+              
+            
+              onTap: () {
+                
+
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                
+              },
+            ),
+            ListTile(
+              title: Text('v1.0.0(beta)'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+              
+              },
+            ),
+            ListTile(
+              title: Text('©AmanZishan'),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -302,6 +425,7 @@ class _GeneratePageState extends State<GeneratePage> {
       if (imageUrl != '') doneProcessing = true;
     });
   }
+  
 
   void _printPdf() {
     Printing.layoutPdf(onLayout: (PdfPageFormat format) async {
