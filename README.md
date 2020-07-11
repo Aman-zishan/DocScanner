@@ -1,4 +1,4 @@
-<p align="center"><img src="images/logo.png"></p>
+<p align="center"><img width="50%" height="50%" src="images/logo.png"></p>
 
 :bird: Flutter App to scan document and share as pdf.
 
