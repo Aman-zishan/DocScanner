@@ -27,5 +27,7 @@
 
 <p align="center"><img width="25%" height="25%" src="3.png">         <img width="25%" height="25%" src="4.png" ></p>
 
+[Download v1.0.0 Beta APK here]
+
 
 ## This app is under development
