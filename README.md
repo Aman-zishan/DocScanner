@@ -1,4 +1,4 @@
-# DocScanner
+<p align="center"><img src="images/logo.png"></p>
 
 :bird: Flutter App to scan document and share as pdf.
 
