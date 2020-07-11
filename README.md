@@ -27,7 +27,7 @@
 
 <p align="center"><img width="25%" height="25%" src="3.png">         <img width="25%" height="25%" src="4.png" ></p>
 
-[Download v1.0.0 Beta APK here]
+[Download v1.0.0 Beta APK here](https://github.com/Aman-zishan/DocScanner/raw/master/DocScanner.apk)
 
 
 ## This app is under development
