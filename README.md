@@ -9,7 +9,7 @@
 [![GitHub license](https://img.shields.io/github/license/Aman-zishan/DocScanner.svg)](https://github.com/Aman-zishan/DocScanner/blob/master/LICENSE)
 [![HitCount](http://hits.dwyl.com/Aman-zishan/DocScanner.svg?style=flat)](http://hits.dwyl.com/Aman-zishan/DocScanner)
 [![GitHub stars](https://img.shields.io/github/stars/Aman-zishan/DocScanner.svg?style=social&label=Star&maxAge=2592000)](https://github.com/Aman-zishan/DocScanner/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/Aman-zishan/DocScanner.svg?style=social&label=Forks&maxAge=2592000)](https://github.com/Aman-zishan/DocScanner/network/members)
+[![GitHub forks](https://img.shields.io/github/forks/Aman-zishan/DocScanner.svg?style=social&label=Fork&maxAge=2592000)](https://github.com/Aman-zishan/DocScanner/network/members)
 
 </div>
 
