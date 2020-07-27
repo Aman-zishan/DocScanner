@@ -1,6 +1,7 @@
 <p align="center"><img width="50%" height="50%" src="images/logo.png"></p>
 
 <p align="center">
+  
 [![time tracker](https://wakatime.com/badge/github/Aman-zishan/DocScanner.svg)](https://wakatime.com/badge/github/Aman-zishan/DocScanner)
   
 [![Build Status](https://travis-ci.com/Aman-zishan/DocScanner.svg?branch=master)](https://travis-ci.com/Aman-zishan/DocScanner)
