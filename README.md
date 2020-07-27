@@ -5,6 +5,7 @@
 [![time tracker](https://wakatime.com/badge/github/Aman-zishan/DocScanner.svg)](https://wakatime.com/badge/github/Aman-zishan/DocScanner)
 [![Build Status](https://travis-ci.com/Aman-zishan/DocScanner.svg?branch=master)](https://travis-ci.com/Aman-zishan/DocScanner)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Aman-zishan/DocScanner/issues)
+[![stars](http://githubbadges.com/star.svg?user=Aman-zishan&repo=DocScanner&background=007ecg&color=bbb&style=flat)
 
 </div>
 
