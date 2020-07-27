@@ -7,6 +7,7 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Aman-zishan/DocScanner/issues)
 [![HitCount](http://hits.dwyl.com/Aman-zishan/DocScanner.svg?style=flat)](http://hits.dwyl.com/Aman-zishan/DocScanner)
 [![GitHub stars](https://img.shields.io/github/stars/Aman-zishan/DocScanner.svg?style=social&label=Star&maxAge=2592000)](https://github.com/Aman-zishan/DocScanner/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/Aman-zishan/DocScanner.svg?style=social&label=Star&maxAge=2592000)](https://github.com/Aman-zishan/DocScanner/network/members)
 
 </div>
 
