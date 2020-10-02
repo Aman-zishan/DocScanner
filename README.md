@@ -45,3 +45,13 @@
 
 
 ## This app is under development
+
+## Contribution
+
+<p><img src="https://hacktoberfestswaglist.com/img/Hacktoberfest_20.jpg"></p>
+
+Hacktoberfest® is open to everyone in our global community. Whether you’re a developer, student learning to code, event host, or company of any size, you can help drive growth of open source and make positive contributions to an ever-growing community. All backgrounds and skill levels are encouraged to complete the challenge.
+
+Go through the [guidelines](https://github.com/Aman-zishan/DocScanner/blob/master/CONTRIBUTING.md) and feel free to contribute to this open source project!
+
+
