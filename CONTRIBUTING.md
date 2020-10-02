@@ -14,7 +14,6 @@ Make your changes
  - Check out the issues [here](https://github.com/Aman-zishan/DocScanner/issues)
  - Add new features
  - Imporve UI
- - Feel free to add issues 
  - Add your name to the CONTRIBUTORS.md file
 
 Commit and push 
