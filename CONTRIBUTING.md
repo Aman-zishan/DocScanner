@@ -1,6 +1,6 @@
 ## Getting started
 
-Fork this repository (Click the Fork button in the top right of this page, click your Profile Image)
+Fork this repository (Click the Fork button on the top right of this page, click your Profile Image)
 
 Clone your fork down to your local machine
 
@@ -14,7 +14,7 @@ Make your changes
     
  - Check out the issues [here](https://github.com/Aman-zishan/DocScanner/issues)
  - Add new features
- - Imporve UI
+ - Improve UI
  - Add your name to the CONTRIBUTORS.md file
 
 Commit and push 
