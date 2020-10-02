@@ -18,6 +18,10 @@ Make your changes
 
 Commit and push 
 
+    git init
+    
+    //It is used to initialize a git repo in your local machine
+    
     git add .
 
     //It is used to stage the changed file. 
