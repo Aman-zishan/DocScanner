@@ -1,37 +1,57 @@
-## Welcome to GitHub Pages
+<p align="center"><img width="50%" height="50%" src="images/logo.png"></p>
 
-You can use the [editor on GitHub](https://github.com/Aman-zishan/DocScanner/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+<div align="center">
+  
+[![time tracker](https://wakatime.com/badge/github/Aman-zishan/DocScanner.svg)](https://wakatime.com/badge/github/Aman-zishan/DocScanner)
+[![Build Status](https://travis-ci.com/Aman-zishan/DocScanner.svg?branch=master)](https://travis-ci.com/Aman-zishan/DocScanner)
+[![GitHub issues](https://img.shields.io/github/issues/Aman-zishan/DocScanner.svg)](https://GitHub.com/Aman-zishan/DocScanner/issues/)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Aman-zishan/DocScanner/issues)
+[![GitHub license](https://img.shields.io/github/license/Aman-zishan/DocScanner.svg)](https://github.com/Aman-zishan/DocScanner/blob/master/LICENSE)
+[![HitCount](http://hits.dwyl.com/Aman-zishan/DocScanner.svg?style=flat)](http://hits.dwyl.com/Aman-zishan/DocScanner)
+[![GitHub stars](https://img.shields.io/github/stars/Aman-zishan/DocScanner)](https://github.com/Aman-zishan/DocScanner/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/Aman-zishan/DocScanner)](https://github.com/Aman-zishan/DocScanner/network/members)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+</div>
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+:bird: Flutter App to scan document and share as pdf.(v1.0.0 Beta)
 
-```markdown
-Syntax highlighted code block
 
-# Header 1
-## Header 2
-### Header 3
 
-- Bulleted
-- List
+## :dart:Done
 
-1. Numbered
-2. List
+* Takes picture.
+* Saves the image in temporary location.
+* saves as pdf.
+* share and print option.
 
-**Bold** and _Italic_ and `Code` text
 
-[Link](url) and ![Image](src)
-```
+## :dart:ToDo
+                                       
+* Process the image to greyscale.
+* multiple photo selection.
+* Edge detection.
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## Phase-1
 
-### Jekyll Themes
+<p align="center"><img width="25%" height="25%" src="1.png">         <img width="25%" height="25%" src="2.png" ></p>
+  
+  
+## Phase-2
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Aman-zishan/DocScanner/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+<p align="center"><img width="25%" height="25%" src="3.png">         <img width="25%" height="25%" src="4.png" ></p>
 
-### Support or Contact
+[Download v1.0.0 Beta APK here](https://github.com/Aman-zishan/DocScanner/raw/master/DocScanner.apk)
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+
+## This app is under development
+
+## Contribution
+
+<p align="center"><img src="https://hacktoberfestswaglist.com/img/Hacktoberfest_20.jpg" width="10%"></p>
+
+Hacktoberfest® is open to everyone in our global community. Whether you’re a developer, student learning to code, event host, or company of any size, you can help drive growth of open source and make positive contributions to an ever-growing community. All backgrounds and skill levels are encouraged to complete the challenge.
+
+Go through the [guidelines](https://github.com/Aman-zishan/DocScanner/blob/master/CONTRIBUTING.md) and feel free to contribute to this open source project!
+
+
