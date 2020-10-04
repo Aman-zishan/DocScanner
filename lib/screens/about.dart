@@ -53,7 +53,7 @@ class AboutPage extends StatelessWidget {
                 ),
                 SizedBox(height: 5.0),
                 Text(
-                    'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries'),
+                    'DocScanner is a simple open sourced Document scanner App, DocScanner is build to make scanning documents convenient for the users. This App contains absolutely zero Ads. '),
                 SizedBox(height: 15.0),
                 Text(
                   'Features',
@@ -62,8 +62,8 @@ class AboutPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 5.0),
-                Text(
-                    'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries'),
+                Text('- Take image and convert to pdf '
+                    '- Print and share pdf '),
                 SizedBox(height: 15.0),
                 Text(
                   'Version',
@@ -72,7 +72,7 @@ class AboutPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 5.0),
-                Text('Beta v1.0.1'),
+                Text('v1.0. Beta'),
               ],
             ),
           ],
