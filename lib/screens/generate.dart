@@ -75,7 +75,9 @@ class _GeneratePageState extends State<GeneratePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         CustomButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            sharePdf();
+                          },
                           width: 120.0,
                           title: 'Share',
                           icon: Icons.share,
