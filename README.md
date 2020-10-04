@@ -41,6 +41,11 @@
 
 <p align="center"><img width="25%" height="25%" src="3.png">         <img width="25%" height="25%" src="4.png" ></p>
 
+
+## Phase-3
+
+<p align="center"><img width="25%" height="25%" src="screen1.jpg">         <img width="25%" height="25%" src="screen2.jpg" >         <img width="25%" height="25%" src="screen3.jpg" ></p>
+
 [Download v1.0.0 Beta APK here](https://github.com/Aman-zishan/DocScanner/raw/master/DocScanner.apk)
 
 
