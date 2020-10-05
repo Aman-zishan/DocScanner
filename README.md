@@ -14,7 +14,9 @@
 </div>
 
 
-:bird: Flutter App to scan document and share as pdf.(v1.0.0 Beta)
+:bird: Flutter App to scan document and share as pdf.
+
+Please do check the [releases](https://github.com/Aman-zishan/DocScanner/releases) for the source code along with APK version.
 
 
 
