@@ -16,8 +16,12 @@
 
 :bird: Flutter App to scan document and share as pdf.
 
-Please do check the [releases](https://github.com/Aman-zishan/DocScanner/releases) or <a href="https://apt.izzysoft.de/fdroid/index/apk/com.example.DocScanner"><img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" width="10%"></a> for the source code along with APK version.
 
+# Downloads:
+
+<a href="https://apt.izzysoft.de/fdroid/index/apk/com.example.DocScanner"><img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" width="15%"></a>
+
+Please do check the [releases](https://github.com/Aman-zishan/DocScanner/releases) for the source code along with APK version.
 
 
 ## :dart:Done
