@@ -1,4 +1,4 @@
 <!-- [name](github profile link) -->
 
 [Darshan Rander](https://github.com/SirusCodes/)
-[Aparna Sathyanathan] (https://github.com/aparnasathyan01)
+[Aparna Sathyanathan](https://github.com/aparnasathyan01)
