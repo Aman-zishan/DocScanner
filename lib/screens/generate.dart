@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:DocScanner/custom_widgets/cuetom_button.dart';
+import 'package:DocScanner/custom_widgets/custom_button.dart';
 import 'package:DocScanner/screens/about.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
