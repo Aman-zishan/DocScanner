@@ -50,7 +50,7 @@ Please do check the [releases](https://github.com/Aman-zishan/DocScanner/release
 
 ## Phase-3
 
-<p align="center"><img width="25%" height="25%" src="demo/screen1.jpg">         <img width="25%" height="25%" src="demo/screen2.jpg" >         <img width="25%" height="25%" src="demo/screen3.jpg" ></p>
+<p align="center">         <img width="25%" height="25%" src="demo/docscanner.gif" ></p>
 
 
 
