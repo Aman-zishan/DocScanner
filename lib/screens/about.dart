@@ -53,7 +53,7 @@ class AboutPage extends StatelessWidget {
                 ),
                 SizedBox(height: 5.0),
                 Text(
-                    'DocScanner is a simple open sourced Document scanner App, DocScanner is build to make scanning documents convenient for the users. This App contains absolutely zero Ads. '),
+                    'DocScanner is a simple open sourced Document scanner App, DocScanner is built to make scanning documents convenient for the users. This App contains absolutely zero Ads. '),
                 SizedBox(height: 15.0),
                 Text(
                   'Features',
@@ -72,7 +72,7 @@ class AboutPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 5.0),
-                Text('v1.0. Beta'),
+                Text('v1.0.0-Beta-1'),
               ],
             ),
           ],

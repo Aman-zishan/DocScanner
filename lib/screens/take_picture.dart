@@ -5,7 +5,6 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
-
 import './generate.dart';
 
 // A screen that allows users to take a picture using a given camera.
@@ -24,6 +23,15 @@ class TakePictureScreen extends StatefulWidget {
 class TakePictureScreenState extends State<TakePictureScreen> {
   CameraController _controller;
   Future<void> _initializeControllerFuture;
+  bool gridviewstate = false;
+
+  Color selectedColor = Colors.black;
+
+  void showgrid() {
+    setState(() {
+      gridviewstate = !gridviewstate;
+    });
+  }
 
   @override
   void initState() {
@@ -52,105 +60,115 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       // ignore: missing_return
-      onWillPop: (){
-        showModalBottomSheet(context: context, builder: (context){
-          return Container(
-            decoration: BoxDecoration(
-                color: Colors.transparent
-            ),
-            height: 100,
-            width: double.infinity,
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 5,sigmaY: 5),
-              child: Container(
+      onWillPop: () {
+        showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return Container(
+                decoration: BoxDecoration(color: Colors.transparent),
                 height: 100,
                 width: double.infinity,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25),
-                        topRight: Radius.circular(25)
-                    ),
-                    color: Colors.white
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(22, 20, 10, 0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-
-                      Text("Do you really want to exit?",
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            decoration: TextDecoration.none
-                        ),
-                      ),
-                      SizedBox(height: 5,),
-                      Row(
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                  child: Container(
+                    height: 100,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25),
+                            topRight: Radius.circular(25)),
+                        color: Colors.white),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(22, 20, 10, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(width: 5,),
-                          FlatButton(
-                            onPressed: (){
-                              Navigator.of(context).pop();
-                            },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(20))
-                            ),
-                            color: Colors.black,
-                            child: Text(
-                              "Cancel",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                  letterSpacing: 1
-                              ),
-                            ),
+                          Text(
+                            "Do you really want to exit?",
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                decoration: TextDecoration.none),
                           ),
-                          SizedBox(width: 25,),
-                          FlatButton(
-                            onPressed: (){
-                              exit(0);
-                            },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(20))
-                            ),
-                            color: Colors.white30,
-                            child: Text(
-                              "Yes",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  letterSpacing: 1,
-                                  color: Colors.black
-                              ),
-                            ),
+                          SizedBox(
+                            height: 5,
                           ),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 5,
+                              ),
+                              FlatButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20))),
+                                color: Colors.black,
+                                child: Text(
+                                  "Cancel",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                      letterSpacing: 1),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 25,
+                              ),
+                              FlatButton(
+                                onPressed: () {
+                                  exit(0);
+                                },
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20))),
+                                color: Colors.white30,
+                                child: Text(
+                                  "Yes",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      letterSpacing: 1,
+                                      color: Colors.black),
+                                ),
+                              ),
+                            ],
+                          )
                         ],
-                      )
-                    ],
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          );
-        } );
+              );
+            });
       },
+
       child: Scaffold(
         // Wait until the controller is initialized before displaying the
         // camera preview. Use a FutureBuilder to display a loading spinner
         // until the controller has finished initializing.
+
         body: FutureBuilder<void>(
           future: _initializeControllerFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              // If the Future is complete, display the preview.
-              return CameraPreview(_controller);
+              return Stack(
+                children: <Widget>[
+                  // If the Future is complete, display the preview.
+
+                  Container(child: CameraPreview(_controller)),
+                  if (gridviewstate) gridview //Add grid view
+                ],
+              );
             } else {
               // Otherwise, display a loading indicator.
               return Center(child: CircularProgressIndicator());
             }
           },
         ),
+
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: Container(
           height: 70.0,
@@ -217,20 +235,51 @@ class TakePictureScreenState extends State<TakePictureScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Expanded(
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: Icon(
+                  child: IconButton(
+                    onPressed: () => null,
+                    icon: Icon(
                       Icons.filter_b_and_w,
                       color: Colors.black,
                       size: 30,
                     ),
                   ),
                 ),
+                Expanded(
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.grid_on,
+                      size: 30,
+                    ),
+                    color: selectedColor,
+                    onPressed: () => {
+                      showgrid(),
+                      setState(
+                        () {
+                          if (selectedColor == Colors.blue) {
+                            selectedColor = Colors.black;
+                          } else {
+                            selectedColor = Colors.blue;
+                          }
+                        },
+                      ),
+                    },
+                  ),
+                ),
                 Expanded(child: SizedBox(width: 20.0)),
                 Expanded(
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: Icon(
+                  child: IconButton(
+                    onPressed: () => null,
+                    icon: Icon(
+                      Icons.file_upload,
+                      color: Colors.black,
+                      size: 30,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: IconButton(
+                    onPressed: () => null,
+                    icon: Icon(
                       Icons.filter,
                       color: Colors.black,
                       size: 30,
@@ -248,3 +297,87 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     );
   }
 }
+
+Widget gridview = Container(
+  decoration: BoxDecoration(border: Border.all(width: 0)),
+  child: GridView(
+    shrinkWrap: true,
+    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisSpacing: 2,
+      mainAxisSpacing: 2,
+      crossAxisCount: 3,
+    ),
+    children: <Widget>[
+      Container(
+        decoration: BoxDecoration(
+          border: Border(
+              right: BorderSide(width: 0, color: Colors.blue),
+              bottom: BorderSide(width: 0, color: Colors.blue)),
+        ),
+      ),
+      Container(
+        decoration: BoxDecoration(
+          border: Border(
+              left: BorderSide(width: 0, color: Colors.blue),
+              right: BorderSide(width: 0, color: Colors.blue),
+              bottom: BorderSide(width: 0, color: Colors.blue)),
+        ),
+      ),
+      Container(
+        decoration: BoxDecoration(
+          border: Border(
+              left: BorderSide(width: 0, color: Colors.blue),
+              bottom: BorderSide(width: 0, color: Colors.blue)),
+        ),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+    ],
+  ),
+);
