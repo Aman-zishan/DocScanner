@@ -21,12 +21,6 @@ class TakePictureScreen extends StatefulWidget {
 }
 
 class TakePictureScreenState extends State<TakePictureScreen> {
-  List<String> images = List<String>();
-
-  //images = ['jithin'];
-
-  bool done = false;
-  int count = 0;
   CameraController _controller;
   Future<void> _initializeControllerFuture;
   bool gridviewstate = false;
@@ -59,7 +53,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   void dispose() {
     // Dispose of the controller when the widget is disposed.
     _controller.dispose();
-
     super.dispose();
   }
 
@@ -223,7 +216,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
               },
               elevation: 2.0,
             ),
-
           ),
         ),
 
@@ -252,3 +244,140 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                     ),
                   ),
                 ),
+                Expanded(
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.grid_on,
+                      size: 30,
+                    ),
+                    color: selectedColor,
+                    onPressed: () => {
+                      showgrid(),
+                      setState(
+                        () {
+                          if (selectedColor == Colors.blue) {
+                            selectedColor = Colors.black;
+                          } else {
+                            selectedColor = Colors.blue;
+                          }
+                        },
+                      ),
+                    },
+                  ),
+                ),
+                Expanded(child: SizedBox(width: 20.0)),
+                Expanded(
+                  child: IconButton(
+                    onPressed: () => null,
+                    icon: Icon(
+                      Icons.file_upload,
+                      color: Colors.black,
+                      size: 30,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: IconButton(
+                    onPressed: () => null,
+                    icon: Icon(
+                      Icons.filter,
+                      color: Colors.black,
+                      size: 30,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          shape: CircularNotchedRectangle(),
+          notchMargin: 4.0,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+}
+
+Widget gridview = Container(
+  decoration: BoxDecoration(border: Border.all(width: 0)),
+  child: GridView(
+    shrinkWrap: true,
+    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisSpacing: 2,
+      mainAxisSpacing: 2,
+      crossAxisCount: 3,
+    ),
+    children: <Widget>[
+      Container(
+        decoration: BoxDecoration(
+          border: Border(
+              right: BorderSide(width: 0, color: Colors.blue),
+              bottom: BorderSide(width: 0, color: Colors.blue)),
+        ),
+      ),
+      Container(
+        decoration: BoxDecoration(
+          border: Border(
+              left: BorderSide(width: 0, color: Colors.blue),
+              right: BorderSide(width: 0, color: Colors.blue),
+              bottom: BorderSide(width: 0, color: Colors.blue)),
+        ),
+      ),
+      Container(
+        decoration: BoxDecoration(
+          border: Border(
+              left: BorderSide(width: 0, color: Colors.blue),
+              bottom: BorderSide(width: 0, color: Colors.blue)),
+        ),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+      Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+      ),
+    ],
+  ),
+);

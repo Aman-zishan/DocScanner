@@ -1,16 +1,14 @@
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:DocScanner/custom_widgets/custom_button.dart';
 import 'package:DocScanner/screens/about.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
 class GeneratePage extends StatefulWidget {
-  final List imagePath;
+  final String imagePath;
   const GeneratePage({Key key, this.imagePath}) : super(key: key);
 
   @override
@@ -20,15 +18,9 @@ class GeneratePage extends StatefulWidget {
 // A widget that displays the picture taken by the user.
 @override
 class _GeneratePageState extends State<GeneratePage> {
-
-
-  var screenHeight = window.physicalSize.height / window.devicePixelRatio;
-   var screenWidth = window.physicalSize.width / window.devicePixelRatio;
   final pw.Document pdf = pw.Document();
 
   bool doneProcessing = false;
-  PdfImage image;
-  File file;
   int pageCount = 0;
   int totalPage = 1;
   String appDocPath;
@@ -123,17 +115,22 @@ class _GeneratePageState extends State<GeneratePage> {
   }
 
   Future initiateScraping(PdfPageFormat format) async {
-    List imageUrl = widget.imagePath;
+    String imageUrl = widget.imagePath;
 
-    for (String item in imageUrl) {
-      await addPage(pdf, format, item);
-    }
+    await addPage(pdf, format, imageUrl);
   }
 
   Future<void> addPage(
       pw.Document pdf, PdfPageFormat format, String imageUrl) async {
+    final File file = new File(imageUrl);
+    final PdfImage image = await pdfImageFromImageProvider(
+        pdf: pdf.document, image: FileImage(file));
 
-
+    pdf.addPage(pw.Page(build: (pw.Context context) {
+      return pw.Center(
+        child: pw.Image(image),
+      );
+    }));
     setState(() {
       if (imageUrl != '') doneProcessing = true;
     });
@@ -141,9 +138,6 @@ class _GeneratePageState extends State<GeneratePage> {
 
   void _printPdf() {
     Printing.layoutPdf(onLayout: (PdfPageFormat format) async {
-      setState(() {
-        
-      });
       return pdf.save();
     });
   }
