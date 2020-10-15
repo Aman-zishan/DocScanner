@@ -24,6 +24,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   CameraController _controller;
   Future<void> _initializeControllerFuture;
   bool gridviewstate = false;
+  bool done = false;
+  int count = 0;
+  List<String> images = List<String>();
 
   Color selectedColor = Colors.black;
 
@@ -202,13 +205,17 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   // Attempt to take a picture and log where it's been saved.
                   await _controller.takePicture(path);
 
-                  // If the picture was taken, display it on a new screen.
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => GeneratePage(imagePath: path),
-                    ),
-                  );
+                  images.add(path);
+                  if (images.isNotEmpty) {
+                  setState(() {
+                    done = true;
+                    count++;
+                  });
+                  }
+
+                  
+
+                 
                 } catch (e) {
                   // If an error occurs, log the error to the console.
                   print(e);
@@ -229,7 +236,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         // ),
         bottomNavigationBar: BottomAppBar(
           child: Container(
-            height: 70,
+            height: 110,
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -265,7 +272,45 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                     },
                   ),
                 ),
-                Expanded(child: SizedBox(width: 20.0)),
+                Expanded(
+                child: Container(
+                  
+                    alignment: Alignment.center,
+                    child: done
+                        ? Padding(
+                          padding: const EdgeInsets.only(top: 30),
+                          child: Column(
+                            
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                                IconButton(
+                                icon: Icon(
+                                  Icons.done,
+                                  color: Colors.green,
+                                ),
+                                iconSize: 40,
+                                onPressed: () {
+                                  // If the picture was taken, display it on a new screen.
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          GeneratePage(imagePath: images),
+                                    ),
+                                  );
+                                },
+                              ),
+                               Container(child: Center(child: Text(count.toString())),width: 17,height: 17,decoration: BoxDecoration(color: Colors.green,shape: BoxShape.circle),),
+                            ],
+                            ),
+                        )
+                        : Icon(
+                            Icons.done,
+                            color: Colors.black,
+                            size: 30,
+                          )),
+              ),
+                //Expanded(child: SizedBox(width: 20.0)),
                 Expanded(
                   child: IconButton(
                     onPressed: () => null,

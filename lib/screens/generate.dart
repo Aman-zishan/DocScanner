@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:DocScanner/custom_widgets/custom_button.dart';
 import 'package:DocScanner/screens/about.dart';
@@ -8,7 +9,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
 class GeneratePage extends StatefulWidget {
-  final String imagePath;
+  final List imagePath;
   const GeneratePage({Key key, this.imagePath}) : super(key: key);
 
   @override
@@ -18,6 +19,8 @@ class GeneratePage extends StatefulWidget {
 // A widget that displays the picture taken by the user.
 @override
 class _GeneratePageState extends State<GeneratePage> {
+  var screenHeight = window.physicalSize.height / window.devicePixelRatio;
+   var screenWidth = window.physicalSize.width / window.devicePixelRatio;
   final pw.Document pdf = pw.Document();
 
   bool doneProcessing = false;
@@ -115,9 +118,10 @@ class _GeneratePageState extends State<GeneratePage> {
   }
 
   Future initiateScraping(PdfPageFormat format) async {
-    String imageUrl = widget.imagePath;
-
-    await addPage(pdf, format, imageUrl);
+    List imageUrl = widget.imagePath;
+    for (String item in imageUrl) {
+      await addPage(pdf, format, item);
+    }
   }
 
   Future<void> addPage(
@@ -126,11 +130,14 @@ class _GeneratePageState extends State<GeneratePage> {
     final PdfImage image = await pdfImageFromImageProvider(
         pdf: pdf.document, image: FileImage(file));
 
-    pdf.addPage(pw.Page(build: (pw.Context context) {
-      return pw.Center(
-        child: pw.Image(image),
-      );
-    }));
+    pdf.addPage(pw.MultiPage(maxPages: imageUrl.length,
+        crossAxisAlignment: pw.CrossAxisAlignment.center,
+        build: (pw.Context context) {
+
+          return <pw.Widget>[
+            pw.Column(children: <pw.Widget>[pw.Image(image,width: screenWidth,height: screenHeight)])
+          ];
+        }));
     setState(() {
       if (imageUrl != '') doneProcessing = true;
     });
