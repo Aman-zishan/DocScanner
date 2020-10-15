@@ -20,6 +20,12 @@ class TakePictureScreen extends StatefulWidget {
 }
 
 class TakePictureScreenState extends State<TakePictureScreen> {
+  List<String> images = List<String>();
+
+  //images = ['jithin'];
+
+  bool done = false;
+  int count = 0;
   CameraController _controller;
   Future<void> _initializeControllerFuture;
 
@@ -43,6 +49,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   void dispose() {
     // Dispose of the controller when the widget is disposed.
     _controller.dispose();
+
     super.dispose();
   }
 
@@ -105,14 +112,21 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
                 // Attempt to take a picture and log where it's been saved.
                 await _controller.takePicture(path);
+                print("path : $path");
 
-                // If the picture was taken, display it on a new screen.
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => GeneratePage(imagePath: path),
-                  ),
-                );
+                images.add(path);
+
+                print('done1 : $done');
+                if (images.isNotEmpty) {
+                  setState(() {
+                    done = true;
+                    count++;
+                  });
+
+                  print('image path : $images');
+                  print('done2 : $done');
+                  //images.add(path);
+                }
               } catch (e) {
                 // If an error occurs, log the error to the console.
                 print(e);
@@ -147,6 +161,40 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                     size: 30,
                   ),
                 ),
+              ),
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.only(top:50),
+                    alignment: Alignment.center,
+                    child: done
+                        ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                              IconButton(
+                              icon: Icon(
+                                Icons.done,
+                                color: Colors.green,
+                              ),
+                              iconSize: 40,
+                              onPressed: () {
+                                // If the picture was taken, display it on a new screen.
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        GeneratePage(imagePath: images),
+                                  ),
+                                );
+                              },
+                            ),
+                             Container(child: Center(child: Text(count.toString())),width: 17,height: 17,decoration: BoxDecoration(color: Colors.green,shape: BoxShape.circle),),
+                          ],
+                          )
+                        : Icon(
+                            Icons.done,
+                            color: Colors.black,
+                            size: 30,
+                          )),
               ),
               Expanded(
                 child: Container(

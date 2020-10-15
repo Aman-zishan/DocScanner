@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -8,7 +10,7 @@ import 'package:printing/printing.dart';
 import '../shared/cdrawer.dart';
 
 class GeneratePage extends StatefulWidget {
-  final String imagePath;
+  final List imagePath;
   const GeneratePage({Key key, this.imagePath}) : super(key: key);
 
   @override
@@ -18,9 +20,15 @@ class GeneratePage extends StatefulWidget {
 // A widget that displays the picture taken by the user.
 @override
 class _GeneratePageState extends State<GeneratePage> {
+
+
+  var screenHeight = window.physicalSize.height / window.devicePixelRatio;
+   var screenWidth = window.physicalSize.width / window.devicePixelRatio;
   final pw.Document pdf = pw.Document();
 
   bool doneProcessing = false;
+  PdfImage image;
+  File file;
   int pageCount = 0;
   int totalPage = 1;
   String appDocPath;
@@ -78,21 +86,33 @@ class _GeneratePageState extends State<GeneratePage> {
   }
 
   Future initiateScraping(PdfPageFormat format) async {
-    String imageUrl = widget.imagePath;
+    List imageUrl = widget.imagePath;
 
-    await addPage(pdf, format, imageUrl);
+    for (String item in imageUrl) {
+      await addPage(pdf, format, item);
+    }
   }
 
-  Future<void> addPage(pw.Document pdf, PdfPageFormat format, String imageUrl) async {
-    final File file = new File(imageUrl);
-    final PdfImage image =
-        await pdfImageFromImageProvider(pdf: pdf.document, image: FileImage(file));
+  Future<void> addPage(
+      pw.Document pdf, PdfPageFormat format, String imageUrl) async {
+    file = new File(imageUrl);
+    print('last file: $file');
 
-    pdf.addPage(pw.Page(build: (pw.Context context) {
-      return pw.Center(
-        child: pw.Image(image),
-      );
-    }));
+    image = await pdfImageFromImageProvider(
+        pdf: pdf.document, image: FileImage(file));
+
+    print('last image: $image');
+
+    pdf.addPage(pw.MultiPage(maxPages: imageUrl.length,
+        crossAxisAlignment: pw.CrossAxisAlignment.center,
+        build: (pw.Context context) {
+          // return <pw.Widget>[
+
+          return <pw.Widget>[
+            pw.Column(children: <pw.Widget>[pw.Image(image,width: screenWidth,height: screenHeight)])
+          ];
+        }));
+
     setState(() {
       if (imageUrl != '') doneProcessing = true;
     });
@@ -100,11 +120,15 @@ class _GeneratePageState extends State<GeneratePage> {
 
   void _printPdf() {
     Printing.layoutPdf(onLayout: (PdfPageFormat format) async {
+      setState(() {
+        
+      });
       return pdf.save();
     });
   }
 
   Future sharePdf() async {
-    await Printing.sharePdf(bytes: pdf.save(), filename: '${DateTime.now()}.pdf');
+    await Printing.sharePdf(
+        bytes: pdf.save(), filename: '${DateTime.now()}.pdf');
   }
 }
