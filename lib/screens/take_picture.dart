@@ -177,51 +177,66 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           height: 70.0,
           width: 70.0,
           child: FittedBox(
-            child: FloatingActionButton(
-              backgroundColor: Colors.lightBlueAccent,
+            // Inkwell is used for long press method
+            child: InkWell(
 
-              child: Icon(
-                Icons.camera_alt,
-                color: Colors.white,
-              ),
-              // Provide an onPressed callback.
-              onPressed: () async {
-                // Take the Picture in a try / catch block. If anything goes wrong,
-                // catch the error.
-                try {
-                  // Ensure that the camera is initialized.
+              highlightColor: Colors.red,
+              onLongPress: (){
 
-                  await _initializeControllerFuture;
+                // reseting captured images 
+                setState(() {
+                      done = false;
+                      images.clear();
+                      count = 0;
+                    });
 
-                  // Construct the path where the image should be saved using the
-                  // pattern package.
-                  final path = join(
-                    // Store the picture in the temp directory.
-                    // Find the temp directory using the `path_provider` plugin.
-                    (await getTemporaryDirectory()).path,
-                    '${DateTime.now()}.png',
-                  );
-
-                  // Attempt to take a picture and log where it's been saved.
-                  await _controller.takePicture(path);
-
-                  images.add(path);
-                  if (images.isNotEmpty) {
-                  setState(() {
-                    done = true;
-                    count++;
-                  });
-                  }
-
-                  
-
-                 
-                } catch (e) {
-                  // If an error occurs, log the error to the console.
-                  print(e);
-                }
               },
-              elevation: 2.0,
+                          child: FloatingActionButton(
+                backgroundColor: Colors.lightBlueAccent,
+
+                child: Icon(
+                  Icons.camera_alt,
+                  color: Colors.white,
+                ),
+                // Provide an onPressed callback.
+                onPressed: () async {
+                  // Take the Picture in a try / catch block. If anything goes wrong,
+                  // catch the error.
+                  try {
+                    // Ensure that the camera is initialized.
+
+                    await _initializeControllerFuture;
+
+                    // Construct the path where the image should be saved using the
+                    // pattern package.
+                    final path = join(
+                      // Store the picture in the temp directory.
+                      // Find the temp directory using the `path_provider` plugin.
+                      (await getTemporaryDirectory()).path,
+                      '${DateTime.now()}.png',
+                    );
+
+                    // Attempt to take a picture and log where it's been saved.
+                    await _controller.takePicture(path);
+
+                    images.add(path);
+                    if (images.isNotEmpty) {
+                    setState(() {
+                      done = true;
+                      count++;
+                    });
+                    }
+
+                    
+
+                   
+                  } catch (e) {
+                    // If an error occurs, log the error to the console.
+                    print(e);
+                  }
+                },
+                elevation: 2.0,
+              ),
             ),
           ),
         ),
