@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 
@@ -24,9 +25,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   CameraController _controller;
   Future<void> _initializeControllerFuture;
   bool gridviewstate = false;
-  bool done = false;
-  int count = 0;
-  List<String> images = List<String>();
+  bool _done = false;
+  int _count = 0;
+  List<String> _images = List<String>();
 
   Color selectedColor = Colors.black;
 
@@ -162,7 +163,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   // If the Future is complete, display the preview.
 
                   Container(child: CameraPreview(_controller)),
-                  if (gridviewstate) gridview //Add grid view
+                  if (gridviewstate)
+                    gridview //Add grid view
                 ],
               );
             } else {
@@ -177,51 +179,65 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           height: 70.0,
           width: 70.0,
           child: FittedBox(
-            child: FloatingActionButton(
-              backgroundColor: Colors.lightBlueAccent,
 
-              child: Icon(
-                Icons.camera_alt,
-                color: Colors.white,
-              ),
-              // Provide an onPressed callback.
-              onPressed: () async {
-                // Take the Picture in a try / catch block. If anything goes wrong,
-                // catch the error.
-                try {
-                  // Ensure that the camera is initialized.
+            // Inkwell is used for long press method
+            child: InkWell(
+              
+              highlightColor: Colors.red,
+              onLongPress: (){
 
-                  await _initializeControllerFuture;
+                // reseting captured images 
+                setState(() {
+                      _done = false;
+                      _images.clear();
+                      _count = 0;
+                    });
 
-                  // Construct the path where the image should be saved using the
-                  // pattern package.
-                  final path = join(
-                    // Store the picture in the temp directory.
-                    // Find the temp directory using the `path_provider` plugin.
-                    (await getTemporaryDirectory()).path,
-                    '${DateTime.now()}.png',
-                  );
-
-                  // Attempt to take a picture and log where it's been saved.
-                  await _controller.takePicture(path);
-
-                  images.add(path);
-                  if (images.isNotEmpty) {
-                  setState(() {
-                    done = true;
-                    count++;
-                  });
-                  }
-
-                  
-
-                 
-                } catch (e) {
-                  // If an error occurs, log the error to the console.
-                  print(e);
-                }
               },
-              elevation: 2.0,
+              child: FloatingActionButton(
+                backgroundColor: Colors.lightBlueAccent,
+
+                child: Icon(
+                  Icons.camera_alt,
+                  color: Colors.white,
+                ),
+                // Provide an onPressed callback.
+                onPressed: () async {
+                  // Take the Picture in a try / catch block. If anything goes wrong,
+                  // catch the error.
+                  try {
+                    // Ensure that the camera is initialized.
+
+                    await _initializeControllerFuture;
+
+                    // Construct the path where the image should be saved using the
+                    // pattern package.
+                    final path = join(
+                      // Store the picture in the temp directory.
+                      // Find the temp directory using the `path_provider` plugin.
+                      (await getTemporaryDirectory()).path,
+                      '${DateTime.now()}.png',
+                    );
+
+                    // Attempt to take a picture and log where it's been saved.
+                    await _controller.takePicture(path);
+
+                    _images.add(path);
+                    if (_images.isNotEmpty) {
+                      setState(() {
+                        _done = true;
+                        _count++;
+                      });
+                    }
+
+                    
+                  } catch (e) {
+                    // If an error occurs, log the error to the console.
+                    print(e);
+                  }
+                },
+                elevation: 2.0,
+              ),
             ),
           ),
         ),
@@ -273,43 +289,49 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   ),
                 ),
                 Expanded(
-                child: Container(
-                  
-                    alignment: Alignment.center,
-                    child: done
-                        ? Padding(
-                          padding: const EdgeInsets.only(top: 30),
-                          child: Column(
-                            
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                                IconButton(
-                                icon: Icon(
-                                  Icons.done,
-                                  color: Colors.green,
-                                ),
-                                iconSize: 40,
-                                onPressed: () {
-                                  // If the picture was taken, display it on a new screen.
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          GeneratePage(imagePath: images),
+                  child: Container(
+                      alignment: Alignment.center,
+                      child: _done
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: 30),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.done,
+                                      color: Colors.green,
                                     ),
-                                  );
-                                },
+                                    iconSize: 40,
+                                    onPressed: () {
+                                      // If the picture was taken, display it on a new screen.
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              GeneratePage(imagePath: _images),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  Container(
+                                    child:
+                                        Center(child: Text(_count.toString())),
+                                    width: 17,
+                                    height: 17,
+                                    decoration: BoxDecoration(
+                                        color: Colors.green,
+                                        shape: BoxShape.circle),
+                                  ),
+                                ],
                               ),
-                               Container(child: Center(child: Text(count.toString())),width: 17,height: 17,decoration: BoxDecoration(color: Colors.green,shape: BoxShape.circle),),
-                            ],
-                            ),
-                        )
-                        : Icon(
-                            Icons.done,
-                            color: Colors.black,
-                            size: 30,
-                          )),
-              ),
+                            )
+                          : Icon(
+                              Icons.done,
+                              color: Colors.black,
+                              size: 30,
+                            )),
+                ),
                 //Expanded(child: SizedBox(width: 20.0)),
                 Expanded(
                   child: IconButton(
