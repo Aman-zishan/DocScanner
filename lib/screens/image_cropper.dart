@@ -39,7 +39,6 @@ class _CropperPageState extends State<CropperPage> {
     Widget body;
     if (isEditing) {
       body = Container(
-        // padding: EdgeInsets.fromLTRB(5, 17, 5, 17),
         child: ExtendedImage.file(
           File(image),
           fit: BoxFit.cover,
@@ -63,15 +62,6 @@ class _CropperPageState extends State<CropperPage> {
                       pagePhysics = BouncingScrollPhysics();
                     });
                   }
-                  // if (details.totalScale < 1.071) {
-                  //   setState(() {
-                  //     pagePhysics = BouncingScrollPhysics();
-                  //   });
-                  // } else {
-                  //   setState(() {
-                  //     pagePhysics = NeverScrollableScrollPhysics();
-                  //   });
-                  // }
                 });
           },
         ),
@@ -102,15 +92,6 @@ class _CropperPageState extends State<CropperPage> {
                       pagePhysics = BouncingScrollPhysics();
                     });
                   }
-                  // if (details.totalScale < 1.071) {
-                  //   setState(() {
-                  //     pagePhysics = BouncingScrollPhysics();
-                  //   });
-                  // } else {
-                  //   setState(() {
-                  //     pagePhysics = NeverScrollableScrollPhysics();
-                  //   });
-                  // }
                 });
           },
         ),
@@ -176,7 +157,7 @@ class _CropperPageState extends State<CropperPage> {
                             toolbarColor: Colors.black,
                             toolbarWidgetColor: Colors.white,
                             activeControlsWidgetColor: Colors.red,
-                            hideBottomControls: true,
+                            hideBottomControls: false,
                             initAspectRatio: CropAspectRatioPreset.original,
                             lockAspectRatio: false),
                         iosUiSettings: IOSUiSettings(
