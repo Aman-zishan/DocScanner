@@ -1,6 +1,6 @@
 ---
-name: Feature request 🐞
-about: Thoughts of improving this App?.
+name: Feature request 🛠️
+about: Having thoughts on improving this App?
 labels: "type: enhancement"
 ---
 
