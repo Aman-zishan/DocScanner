@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:DocScanner/screens/image_cropper.dart';
@@ -6,7 +7,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
-import './generate.dart';
+import 'package:image/image.dart' as imgLib;
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
@@ -26,6 +27,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   Future<void> _initializeControllerFuture;
   bool gridviewstate = false;
   bool done = false;
+  bool isGrayScale = false;
   // int count = 0;
   List<String> images = List<String>();
 
@@ -162,7 +164,20 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                 children: <Widget>[
                   // If the Future is complete, display the preview.
 
-                  Container(child: CameraPreview(_controller)),
+                  AnimatedSwitcher(
+                    duration: Duration(milliseconds: 170),
+                    child: isGrayScale
+                        ? Container(
+                            key: ValueKey("grayscaleFalse"),
+                            foregroundDecoration: BoxDecoration(
+                              color: Colors.grey,
+                              backgroundBlendMode: BlendMode.saturation,
+                            ),
+                            child: CameraPreview(_controller))
+                        : Container(
+                            key: ValueKey("grayscaleTrue"),
+                            child: CameraPreview(_controller)),
+                  ),
                   if (gridviewstate) gridview //Add grid view
                 ],
               );
@@ -215,7 +230,20 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                     );
 
                     // Attempt to take a picture and log where it's been saved.
-                    await _controller.takePicture(path);
+                    await _controller.takePicture(path).then((value) {
+                      print(File(path).existsSync());
+                      File(path).readAsBytes().then((value) {
+                        if (isGrayScale) {
+                          imgLib.Image originalImage =
+                              imgLib.decodeImage(value);
+                          imgLib.Image grayImage =
+                              imgLib.grayscale(originalImage);
+                          grayImage = imgLib.copyRotate(grayImage, 90);
+                          File(path)
+                              .writeAsBytesSync(imgLib.encodePng(grayImage));
+                        }
+                      });
+                    });
 
                     images.add(path);
                     if (images.isNotEmpty) {
@@ -252,7 +280,11 @@ class TakePictureScreenState extends State<TakePictureScreen> {
               children: <Widget>[
                 Expanded(
                   child: IconButton(
-                    onPressed: () => null,
+                    onPressed: () {
+                      setState(() {
+                        isGrayScale = !isGrayScale;
+                      });
+                    },
                     icon: Icon(
                       Icons.filter_b_and_w,
                       color: Colors.black,
