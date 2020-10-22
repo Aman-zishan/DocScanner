@@ -371,16 +371,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                             )),
                 ),
                 //Expanded(child: SizedBox(width: 20.0)),
-                Expanded(
-                  child: IconButton(
-                    onPressed: () => null,
-                    icon: Icon(
-                      Icons.file_upload,
-                      color: Colors.black,
-                      size: 30,
-                    ),
-                  ),
-                ),
+
                 Expanded(
                   child: IconButton(
                     onPressed: () => null,
@@ -388,6 +379,18 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                       Icons.filter,
                       color: Colors.black,
                       size: 30,
+                    ),
+                  ),
+                ),
+
+                //TODO: OCR TOOL
+                Expanded(
+                  child: IconButton(
+                    onPressed: () => null,
+                    icon: Icon(
+                      Icons.text_format,
+                      color: Colors.black,
+                      size: 35,
                     ),
                   ),
                 ),

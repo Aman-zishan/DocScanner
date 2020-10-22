@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class GeneratePage extends StatefulWidget {
   final List imagePath;
@@ -20,7 +21,8 @@ class GeneratePage extends StatefulWidget {
 @override
 class _GeneratePageState extends State<GeneratePage> {
   var screenHeight = window.physicalSize.height / window.devicePixelRatio;
-   var screenWidth = window.physicalSize.width / window.devicePixelRatio;
+  var screenWidth = window.physicalSize.width / window.devicePixelRatio;
+  final bugController = TextEditingController();
   final pw.Document pdf = pw.Document();
 
   bool doneProcessing = false;
@@ -57,21 +59,13 @@ class _GeneratePageState extends State<GeneratePage> {
                       'images/logo.png',
                       width: width,
                     ),
-                    SizedBox(height: 50.0),
-                    Text(
-                      'Scanning Completed!',
-                      style: TextStyle(
-                        fontSize: 24.0,
-                        // fontWeight: FontWeight.bold,
-                      ),
-                    ),
                     SizedBox(height: 20.0),
                     CustomButton(
                       onPressed: () {
                         _printPdf();
                       },
                       width: 260.0,
-                      title: 'Print Document',
+                      title: 'Save Document',
                       icon: Icons.print,
                     ),
                     Row(
@@ -98,6 +92,61 @@ class _GeneratePageState extends State<GeneratePage> {
                           width: 120.0,
                           title: 'About',
                           icon: Icons.info,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        CustomButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Dialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          20.0)), //this right here
+                                  child: Container(
+                                    height: 200,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          TextField(
+                                            decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                labelText: 'Report Bug'),
+                                            controller: bugController,
+                                          ),
+                                          SizedBox(
+                                            width: 320.0,
+                                            child: RaisedButton(
+                                                onPressed: () =>
+                                                    _sendBugReportMail(
+                                                        bugController.text),
+                                                child: Text(
+                                                  "Report",
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                                color: Colors.black),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          width: 155.0,
+                          title: 'Bug report',
+                          icon: Icons.bug_report,
                         ),
                       ],
                     ),
@@ -130,12 +179,14 @@ class _GeneratePageState extends State<GeneratePage> {
     final PdfImage image = await pdfImageFromImageProvider(
         pdf: pdf.document, image: FileImage(file));
 
-    pdf.addPage(pw.MultiPage(maxPages: imageUrl.length,
+    pdf.addPage(pw.MultiPage(
+        maxPages: imageUrl.length,
         crossAxisAlignment: pw.CrossAxisAlignment.center,
         build: (pw.Context context) {
-
           return <pw.Widget>[
-            pw.Column(children: <pw.Widget>[pw.Image(image,width: screenWidth,height: screenHeight)])
+            pw.Column(children: <pw.Widget>[
+              pw.Image(image, width: screenWidth, height: screenHeight)
+            ])
           ];
         }));
     setState(() {
@@ -152,5 +203,14 @@ class _GeneratePageState extends State<GeneratePage> {
   Future sharePdf() async {
     await Printing.sharePdf(
         bytes: pdf.save(), filename: '${DateTime.now()}.pdf');
+  }
+}
+
+_sendBugReportMail(String bug) async {
+  var url = 'mailto:amanzishan.az@gmail.com?subject=Bug&body=$bug';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }
