@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:DocScanner/screens/image_cropper.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' show join;
@@ -25,7 +26,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   Future<void> _initializeControllerFuture;
   bool gridviewstate = false;
   bool done = false;
-  int count = 0;
+  // int count = 0;
   List<String> images = List<String>();
 
   Color selectedColor = Colors.black;
@@ -179,19 +180,16 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           child: FittedBox(
             // Inkwell is used for long press method
             child: InkWell(
-
               highlightColor: Colors.red,
-              onLongPress: (){
-
-                // reseting captured images 
+              onLongPress: () {
+                // reseting captured images
                 setState(() {
-                      done = false;
-                      images.clear();
-                      count = 0;
-                    });
-
+                  done = false;
+                  images.clear();
+                  // count = 0;
+                });
               },
-                          child: FloatingActionButton(
+              child: FloatingActionButton(
                 backgroundColor: Colors.lightBlueAccent,
 
                 child: Icon(
@@ -221,15 +219,11 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
                     images.add(path);
                     if (images.isNotEmpty) {
-                    setState(() {
-                      done = true;
-                      count++;
-                    });
+                      setState(() {
+                        done = true;
+                        // count++;
+                      });
                     }
-
-                    
-
-                   
                   } catch (e) {
                     // If an error occurs, log the error to the console.
                     print(e);
@@ -288,43 +282,62 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   ),
                 ),
                 Expanded(
-                child: Container(
-                  
-                    alignment: Alignment.center,
-                    child: done
-                        ? Padding(
-                          padding: const EdgeInsets.only(top: 30),
-                          child: Column(
-                            
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                                IconButton(
-                                icon: Icon(
-                                  Icons.done,
-                                  color: Colors.green,
-                                ),
-                                iconSize: 40,
-                                onPressed: () {
-                                  // If the picture was taken, display it on a new screen.
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          GeneratePage(imagePath: images),
+                  child: Container(
+                      alignment: Alignment.center,
+                      child: images.length > 0
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: 30),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.done,
+                                      color: Colors.green,
                                     ),
-                                  );
-                                },
+                                    iconSize: 40,
+                                    onPressed: () async {
+                                      // If the picture was taken, display it on a new screen.
+                                      // Navigator.push(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //     builder: (context) =>
+                                      //         GeneratePage(imagePath: images),
+                                      //   ),
+                                      // );
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              CropperPage(imagePath: images),
+                                        ),
+                                      );
+                                      setState(() {});
+                                    },
+                                  ),
+                                  AnimatedSwitcher(
+                                    duration: Duration(milliseconds: 170),
+                                    child: Container(
+                                      key: ValueKey(images.length),
+                                      child: Center(
+                                          child:
+                                              Text(images.length.toString())),
+                                      width: 17,
+                                      height: 17,
+                                      decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          shape: BoxShape.circle),
+                                    ),
+                                  ),
+                                ],
                               ),
-                               Container(child: Center(child: Text(count.toString())),width: 17,height: 17,decoration: BoxDecoration(color: Colors.green,shape: BoxShape.circle),),
-                            ],
-                            ),
-                        )
-                        : Icon(
-                            Icons.done,
-                            color: Colors.black,
-                            size: 30,
-                          )),
-              ),
+                            )
+                          : Icon(
+                              Icons.done,
+                              color: Colors.black,
+                              size: 30,
+                            )),
+                ),
                 //Expanded(child: SizedBox(width: 20.0)),
                 Expanded(
                   child: IconButton(
