@@ -1,14 +1,9 @@
 import 'dart:io';
-import 'dart:ui';
-
-import 'package:DocScanner/custom_widgets/custom_button.dart';
-import 'package:DocScanner/screens/about.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
+
+import 'generate.dart';
 
 class CropperPage extends StatefulWidget {
   final List imagePath;
@@ -126,6 +121,7 @@ class _CropperPageState extends State<CropperPage> {
                           print("edit");
                           setState(() {
                             widget.imagePath.removeAt(currIndex);
+                            currIndex -= 1;
                             if (widget.imagePath.length == 0) {
                               Navigator.of(context).pop();
                             }
@@ -188,6 +184,36 @@ class _CropperPageState extends State<CropperPage> {
           // });
           currIndex = newIndex;
         },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Container(
+        height: 70.0,
+        width: 70.0,
+        child: FittedBox(
+          // Inkwell is used for long press method
+          child: InkWell(
+            highlightColor: Colors.red,
+            child: FloatingActionButton(
+              backgroundColor: Colors.greenAccent,
+
+              child: Icon(
+                Icons.check,
+                color: Colors.white,
+              ),
+              // Provide an onPressed callback.
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        GeneratePage(imagePath: widget.imagePath),
+                  ),
+                );
+              },
+              elevation: 2.0,
+            ),
+          ),
+        ),
       ),
     );
   }
