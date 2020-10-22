@@ -416,72 +416,72 @@ Widget gridview = Container(
       Container(
         decoration: BoxDecoration(
           border: Border(
-              right: BorderSide(width: 0, color: Colors.blue),
-              bottom: BorderSide(width: 0, color: Colors.blue)),
+              right: BorderSide(width: 0, color: Colors.white),
+              bottom: BorderSide(width: 0, color: Colors.white)),
         ),
       ),
       Container(
         decoration: BoxDecoration(
           border: Border(
-              left: BorderSide(width: 0, color: Colors.blue),
-              right: BorderSide(width: 0, color: Colors.blue),
-              bottom: BorderSide(width: 0, color: Colors.blue)),
+              left: BorderSide(width: 0, color: Colors.white),
+              right: BorderSide(width: 0, color: Colors.white),
+              bottom: BorderSide(width: 0, color: Colors.white)),
         ),
       ),
       Container(
         decoration: BoxDecoration(
           border: Border(
-              left: BorderSide(width: 0, color: Colors.blue),
-              bottom: BorderSide(width: 0, color: Colors.blue)),
+              left: BorderSide(width: 0, color: Colors.white),
+              bottom: BorderSide(width: 0, color: Colors.white)),
         ),
       ),
       Container(
         decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+            BoxDecoration(border: Border.all(color: Colors.white, width: 0)),
       ),
       Container(
         decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+            BoxDecoration(border: Border.all(color: Colors.white, width: 0)),
       ),
       Container(
         decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+            BoxDecoration(border: Border.all(color: Colors.white, width: 0)),
       ),
       Container(
         decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+            BoxDecoration(border: Border.all(color: Colors.white, width: 0)),
       ),
       Container(
         decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+            BoxDecoration(border: Border.all(color: Colors.white, width: 0)),
       ),
       Container(
         decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+            BoxDecoration(border: Border.all(color: Colors.white, width: 0)),
       ),
       Container(
         decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+            BoxDecoration(border: Border.all(color: Colors.white, width: 0)),
       ),
       Container(
         decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+            BoxDecoration(border: Border.all(color: Colors.white, width: 0)),
       ),
       Container(
         decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+            BoxDecoration(border: Border.all(color: Colors.white, width: 0)),
       ),
       Container(
         decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+            BoxDecoration(border: Border.all(color: Colors.white, width: 0)),
       ),
       Container(
         decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+            BoxDecoration(border: Border.all(color: Colors.white, width: 0)),
       ),
       Container(
         decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
+            BoxDecoration(border: Border.all(color: Colors.white, width: 0)),
       ),
     ],
   ),
