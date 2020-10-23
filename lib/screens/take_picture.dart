@@ -471,18 +471,7 @@ Widget gridview = Container(
         decoration:
             BoxDecoration(border: Border.all(color: Colors.white, width: 0)),
       ),
-      Container(
-        decoration:
-            BoxDecoration(border: Border.all(color: Colors.white, width: 0)),
-      ),
-      Container(
-        decoration:
-            BoxDecoration(border: Border.all(color: Colors.white, width: 0)),
-      ),
-      Container(
-        decoration:
-            BoxDecoration(border: Border.all(color: Colors.white, width: 0)),
-      ),
+
     ],
   ),
 );
