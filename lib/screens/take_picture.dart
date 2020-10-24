@@ -406,86 +406,62 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   }
 }
 
-Widget gridview = Container(
-  decoration: BoxDecoration(border: Border.all(width: 0)),
-  child: GridView(
-    shrinkWrap: true,
-    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisSpacing: 2,
-      mainAxisSpacing: 2,
-      crossAxisCount: 3,
+Widget gridview = Stack(
+  children: <Widget> [
+    Container(
+      decoration: BoxDecoration(border: Border.all(width: 0)),
+      child: Row(
+        children: <Widget> [
+        Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border(
+                    right: BorderSide(width: 0, color: Colors.white),
+                ),
+              ),
+            ),
+        ),
+        Expanded(
+            child: Container(),
+        ),
+        Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border(
+                  left: BorderSide(width: 0, color: Colors.white),
+                ),
+              ),
+            ),
+        ),
+      ],
     ),
-    children: <Widget>[
-      Container(
-        decoration: BoxDecoration(
-          border: Border(
-              right: BorderSide(width: 0, color: Colors.blue),
-              bottom: BorderSide(width: 0, color: Colors.blue)),
-        ),
+    ),
+    Container(
+      child: Column(
+        children: <Widget> [
+          Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(width: 0, color: Colors.white),
+                  ),
+                ),
+              )
+          ),
+          Expanded(
+              child: Container()
+          ),
+          Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(width: 0, color: Colors.white),
+                  ),
+                ),
+              )
+          ),
+        ],
       ),
-      Container(
-        decoration: BoxDecoration(
-          border: Border(
-              left: BorderSide(width: 0, color: Colors.blue),
-              right: BorderSide(width: 0, color: Colors.blue),
-              bottom: BorderSide(width: 0, color: Colors.blue)),
-        ),
-      ),
-      Container(
-        decoration: BoxDecoration(
-          border: Border(
-              left: BorderSide(width: 0, color: Colors.blue),
-              bottom: BorderSide(width: 0, color: Colors.blue)),
-        ),
-      ),
-      Container(
-        decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
-      ),
-      Container(
-        decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
-      ),
-      Container(
-        decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
-      ),
-      Container(
-        decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
-      ),
-      Container(
-        decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
-      ),
-      Container(
-        decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
-      ),
-      Container(
-        decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
-      ),
-      Container(
-        decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
-      ),
-      Container(
-        decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
-      ),
-      Container(
-        decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
-      ),
-      Container(
-        decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
-      ),
-      Container(
-        decoration:
-            BoxDecoration(border: Border.all(color: Colors.blue, width: 0)),
-      ),
-    ],
-  ),
+    ),
+  ],
 );
