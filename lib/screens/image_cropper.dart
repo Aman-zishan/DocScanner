@@ -172,18 +172,42 @@ class _CropperPageState extends State<CropperPage> {
         ],
       ),
       extendBodyBehindAppBar: true,
-      body: PageView(
-        controller: pageController,
-        physics: pagePhysics,
-        children: widget.imagePath.map((image) {
-          return imageBody(_height, _width, image);
-        }).toList(),
-        onPageChanged: (int newIndex) {
-          // setState(() {
-          //   currIndex = newIndex;
-          // });
-          currIndex = newIndex;
-        },
+      body: Stack(
+        children: [
+          PageView(
+            controller: pageController,
+            physics: pagePhysics,
+            children: widget.imagePath.map((image) {
+              return imageBody(_height, _width, image);
+            }).toList(),
+            onPageChanged: (int newIndex) {
+              // setState(() {
+              //   currIndex = newIndex;
+              // });
+              currIndex = newIndex;
+            },
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Icon(
+                Icons.fast_rewind_outlined,
+                size: 40,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Icon(
+                Icons.fast_forward_outlined,
+                size: 40,
+              ),
+            ),
+          )
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(
