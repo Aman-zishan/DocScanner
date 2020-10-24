@@ -144,7 +144,7 @@ class _GeneratePageState extends State<GeneratePage> {
                               },
                             );
                           },
-                          width: 155.0,
+                          width: 260.0,
                           title: 'Bug report',
                           icon: Icons.bug_report,
                         ),
