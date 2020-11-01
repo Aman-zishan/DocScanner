@@ -1,7 +1,10 @@
 ---
-name: Feature request 🛠️
+name: "Feature request \U0001F6E0️"
 about: Having thoughts on improving this App?
-labels: "type: enhancement"
+title: ''
+labels: enhancement, help wanted, new feature
+assignees: ''
+
 ---
 
 <!--
@@ -14,6 +17,3 @@ labels: "type: enhancement"
 ## Description
 
 Describe the new feature you wanted to see in this App.
-
-
-

@@ -7,7 +7,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/Aman-zishan/DocScanner.svg)](https://GitHub.com/Aman-zishan/DocScanner/issues/)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Aman-zishan/DocScanner/issues)
 [![GitHub license](https://img.shields.io/github/license/Aman-zishan/DocScanner.svg)](https://github.com/Aman-zishan/DocScanner/blob/master/LICENSE)
-[![HitCount](http://hits.dwyl.com/Aman-zishan/DocScanner.svg?style=flat)](http://hits.dwyl.com/Aman-zishan/DocScanner)
+<img alt="GitHub Releases" src="https://img.shields.io/github/downloads/Aman-zishan/DocScanner/total">
 [![GitHub stars](https://img.shields.io/github/stars/Aman-zishan/DocScanner)](https://github.com/Aman-zishan/DocScanner/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/Aman-zishan/DocScanner)](https://github.com/Aman-zishan/DocScanner/network/members)
 
@@ -16,12 +16,16 @@
 
 :bird: Flutter App to scan document and share as pdf.
 
-
+### v1.0.1 expected release : Last week of November
 # Downloads:
 
 <a href="https://apt.izzysoft.de/fdroid/index/apk/com.example.DocScanner"><img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" width="15%"></a>
 
 Please do check the [releases](https://github.com/Aman-zishan/DocScanner/releases) for the source code along with APK version.
+
+<img alt="GitHub Releases" src="https://img.shields.io/github/downloads/Aman-zishan/DocScanner/total">
+
+
 
 
 ## :dart:Done
@@ -54,9 +58,7 @@ Please do check the [releases](https://github.com/Aman-zishan/DocScanner/release
 <p align="center">         <img width="25%" height="25%" src="demo/docscanner.gif" ></p>
 
 
-
-
-## This app is under development
+## This App is under development
 
 ## Contribution
 

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 import 'package:image/image.dart' as imgLib;
+import 'package:url_launcher/url_launcher.dart';
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
@@ -25,6 +26,8 @@ class TakePictureScreen extends StatefulWidget {
 class TakePictureScreenState extends State<TakePictureScreen> {
   CameraController _controller;
   Future<void> _initializeControllerFuture;
+  final bugController = TextEditingController();
+
   bool gridviewstate = false;
   bool done = false;
   bool isGrayScale = false;
@@ -168,12 +171,10 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                     duration: Duration(milliseconds: 170),
                     child: isGrayScale
                         ? ColorFiltered(
-                        colorFilter: ColorFilter.mode(
-                            Colors.grey,
-                            BlendMode.saturation
-                        ),
-                        key: ValueKey("grayscaleFalse"),
-                        child: CameraPreview(_controller))
+                            colorFilter: ColorFilter.mode(
+                                Colors.grey, BlendMode.saturation),
+                            key: ValueKey("grayscaleFalse"),
+                            child: CameraPreview(_controller))
                         : Container(
                             key: ValueKey("grayscaleTrue"),
                             child: CameraPreview(_controller)),
@@ -371,16 +372,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                             )),
                 ),
                 //Expanded(child: SizedBox(width: 20.0)),
-                Expanded(
-                  child: IconButton(
-                    onPressed: () => null,
-                    icon: Icon(
-                      Icons.file_upload,
-                      color: Colors.black,
-                      size: 30,
-                    ),
-                  ),
-                ),
+
                 Expanded(
                   child: IconButton(
                     onPressed: () => null,
@@ -388,6 +380,59 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                       Icons.filter,
                       color: Colors.black,
                       size: 30,
+                    ),
+                  ),
+                ),
+
+                //TODO: OCR TOOL
+                Expanded(
+                  child: IconButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Dialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    20.0)), //this right here
+                            child: Container(
+                              height: 200,
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TextField(
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          labelText: 'Report Bug'),
+                                      controller: bugController,
+                                    ),
+                                    SizedBox(
+                                      width: 320.0,
+                                      child: RaisedButton(
+                                          onPressed: () => _sendBugReportMail(
+                                              bugController.text),
+                                          child: Text(
+                                            "Report",
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          color: Colors.black),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    icon: Icon(
+                      Icons.bug_report,
+                      color: Colors.black,
+                      size: 35,
                     ),
                   ),
                 ),
@@ -404,24 +449,24 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 }
 
 Widget gridview = Stack(
-  children: <Widget> [
+  children: <Widget>[
     Container(
       decoration: BoxDecoration(border: Border.all(width: 0)),
       child: Row(
-        children: <Widget> [
-        Expanded(
+        children: <Widget>[
+          Expanded(
             child: Container(
               decoration: BoxDecoration(
                 border: Border(
-                    right: BorderSide(width: 0, color: Colors.white),
+                  right: BorderSide(width: 0, color: Colors.white),
                 ),
               ),
             ),
-        ),
-        Expanded(
+          ),
+          Expanded(
             child: Container(),
-        ),
-        Expanded(
+          ),
+          Expanded(
             child: Container(
               decoration: BoxDecoration(
                 border: Border(
@@ -429,36 +474,40 @@ Widget gridview = Stack(
                 ),
               ),
             ),
-        ),
-      ],
-    ),
+          ),
+        ],
+      ),
     ),
     Container(
       child: Column(
-        children: <Widget> [
+        children: <Widget>[
           Expanded(
               child: Container(
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(width: 0, color: Colors.white),
-                  ),
-                ),
-              )
-          ),
-          Expanded(
-              child: Container()
-          ),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(width: 0, color: Colors.white),
+              ),
+            ),
+          )),
+          Expanded(child: Container()),
           Expanded(
               child: Container(
-                decoration: BoxDecoration(
-                  border: Border(
-                    top: BorderSide(width: 0, color: Colors.white),
-                  ),
-                ),
-              )
-          ),
+            decoration: BoxDecoration(
+              border: Border(
+                top: BorderSide(width: 0, color: Colors.white),
+              ),
+            ),
+          )),
         ],
       ),
     ),
   ],
 );
+_sendBugReportMail(String bug) async {
+  var url = 'mailto:amanzishan.az@gmail.com?subject=Bug&body=$bug';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
