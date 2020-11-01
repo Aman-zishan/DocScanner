@@ -170,12 +170,10 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   AnimatedSwitcher(
                     duration: Duration(milliseconds: 170),
                     child: isGrayScale
-                        ? Container(
+                        ? ColorFiltered(
+                            colorFilter: ColorFilter.mode(
+                                Colors.grey, BlendMode.saturation),
                             key: ValueKey("grayscaleFalse"),
-                            foregroundDecoration: BoxDecoration(
-                              color: Colors.grey,
-                              backgroundBlendMode: BlendMode.saturation,
-                            ),
                             child: CameraPreview(_controller))
                         : Container(
                             key: ValueKey("grayscaleTrue"),
