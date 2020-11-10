@@ -20,8 +20,6 @@ class GeneratePage extends StatefulWidget {
 // A widget that displays the picture taken by the user.
 @override
 class _GeneratePageState extends State<GeneratePage> {
-  var screenHeight = window.physicalSize.height / window.devicePixelRatio;
-  var screenWidth = window.physicalSize.width / window.devicePixelRatio;
   final bugController = TextEditingController();
   final pw.Document pdf = pw.Document();
 
@@ -179,16 +177,9 @@ class _GeneratePageState extends State<GeneratePage> {
     final PdfImage image = await pdfImageFromImageProvider(
         pdf: pdf.document, image: FileImage(file));
 
-    pdf.addPage(pw.MultiPage(
-        maxPages: imageUrl.length,
-        crossAxisAlignment: pw.CrossAxisAlignment.center,
-        build: (pw.Context context) {
-          return <pw.Widget>[
-            pw.Column(children: <pw.Widget>[
-              pw.Image(image, width: screenWidth, height: screenHeight)
-            ])
-          ];
-        }));
+    pdf.addPage(pw.Page(build: (pw.Context context) {
+      return pw.Center(child: pw.Image(image));
+    }));
     setState(() {
       if (imageUrl != '') doneProcessing = true;
     });
