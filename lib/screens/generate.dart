@@ -178,6 +178,7 @@ class _GeneratePageState extends State<GeneratePage> {
         pdf: pdf.document, image: FileImage(file));
 
     pdf.addPage(pw.Page(build: (pw.Context context) {
+
       return pw.FullPage(
           ignoreMargins: true,
           child: pw.Center(
@@ -186,6 +187,7 @@ class _GeneratePageState extends State<GeneratePage> {
               fit: pw.BoxFit.fill,
             ),
           ));
+
     }));
     setState(() {
       if (imageUrl != '') doneProcessing = true;
