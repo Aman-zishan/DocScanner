@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
+import 'dart:async';
 
 import 'package:DocScanner/screens/image_cropper.dart';
 import 'package:camera/camera.dart';
@@ -23,11 +24,13 @@ class TakePictureScreen extends StatefulWidget {
   TakePictureScreenState createState() => TakePictureScreenState();
 }
 
-class TakePictureScreenState extends State<TakePictureScreen> {
+class TakePictureScreenState extends State<TakePictureScreen>
+    with SingleTickerProviderStateMixin {
   CameraController _controller;
   Future<void> _initializeControllerFuture;
   final bugController = TextEditingController();
-
+  double size = 14;
+  double _currentOpacity = 0.0;
   bool gridviewstate = false;
   bool done = false;
   bool isGrayScale = false;
@@ -67,6 +70,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //showing popup message exiting app
     return WillPopScope(
       // ignore: missing_return
       onWillPop: () {
@@ -164,6 +168,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return Stack(
+                alignment: Alignment.center,
                 children: <Widget>[
                   // If the Future is complete, display the preview.
 
@@ -178,6 +183,20 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                         : Container(
                             key: ValueKey("grayscaleTrue"),
                             child: CameraPreview(_controller)),
+                  ),
+
+                  //reset message center of screen animation
+                  AnimatedSize(
+                    vsync: this,
+                    //curve: Curves.easeOut,
+                    duration: Duration(milliseconds: 500),
+                    child: AnimatedOpacity(
+                      opacity: _currentOpacity,
+                      duration: Duration(milliseconds: 1000),
+                      child: Text('reset successfull',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: size)),
+                    ),
                   ),
                   if (gridviewstate) gridview //Add grid view
                 ],
@@ -202,6 +221,18 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                 setState(() {
                   done = false;
                   images.clear();
+                  size = 24;
+                  _currentOpacity = 1.0;
+                  Timer(Duration(milliseconds: 1100), () {
+                    setState(() {
+                      _currentOpacity = 0.0;
+                    });
+                  });
+                  Timer(Duration(milliseconds: 2200), () {
+                    setState(() {
+                      size = 14;
+                    });
+                  });
                   // count = 0;
                 });
               },
