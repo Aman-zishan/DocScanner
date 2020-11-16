@@ -193,7 +193,7 @@ class TakePictureScreenState extends State<TakePictureScreen>
                     child: AnimatedOpacity(
                       opacity: _currentOpacity,
                       duration: Duration(milliseconds: 1000),
-                      child: Text('reset successfull',
+                      child: Text('reset successful',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: size)),
                     ),

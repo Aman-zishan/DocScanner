@@ -73,13 +73,14 @@ class _GeneratePageState extends State<GeneratePage> {
                           onPressed: () {
                             sharePdf();
                           },
-                          width: 120.0,
+                          width: 140.0,
                           title: 'Share',
                           icon: Icons.share,
                         ),
                         SizedBox(width: 20.0),
                         CustomButton(
                           onPressed: () {
+
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -87,7 +88,7 @@ class _GeneratePageState extends State<GeneratePage> {
                               ),
                             );
                           },
-                          width: 120.0,
+                          width: 140.0,
                           title: 'About',
                           icon: Icons.info,
                         ),
@@ -146,21 +147,27 @@ class _GeneratePageState extends State<GeneratePage> {
                           title: 'Bug report',
                           icon: Icons.bug_report,
                         ),
+
                       ],
                     ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child:
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 30,left: 10,right: 10,top: 200),
+
+                      child: Column(children: [
+                        Text("This project is licensed under GPL-3.0 open source license\n ",textAlign: TextAlign.justify,),
+                        Text("© copyright Aman Zishan", textAlign: TextAlign.justify,)
+                      ],)
+
+                    ),),
                   ],
                 )
               : Center(child: CircularProgressIndicator()),
         ),
       ),
-      // drawer: Drawer(
-      //   // Add a ListView to the drawer. This ensures the user can scroll
-      //   // through the options in the drawer if there isn't enough vertical
-      //   // space to fit everything.
-      //
-      //   elevation: 1.5,
-      //   child: CDrawer(),
-      // ),
+
     );
   }
 
@@ -179,13 +186,11 @@ class _GeneratePageState extends State<GeneratePage> {
 
     pdf.addPage(pw.Page(build: (pw.Context context) {
 
-      return pw.FullPage(
-          ignoreMargins: true,
-          child: pw.Center(
-            child: pw.Image(
+      return pw.Center(
+
+          child: pw.Image(
               image,
               fit: pw.BoxFit.fill,
-            ),
           ));
 
     }));

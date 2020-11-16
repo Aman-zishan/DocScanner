@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:DocScanner/screens/contributors.dart';
 
 class AboutPage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+//List data = getContributors();
+
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -22,36 +27,21 @@ class AboutPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Center(
-                  child: CircleAvatar(
-                    radius: 60,
-                    backgroundColor: Colors.white,
-                    child: Icon(
-                      Icons.person,
-                      size: 60,
-                      color: Colors.black,
-                    ),
-                  ),
+                  child: GestureDetector(
+                    onTap: (){},
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(25),
+                    child:
+                    Image.asset("images/logo.png")
+
+                  ),),
                 ),
                 SizedBox(height: 15.0),
-                Center(
-                  child: Text(
-                    'Aman Zishan',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
-                Divider(
-                  color: Colors.white,
-                  indent: 130,
-                  endIndent: 130,
-                ),
+
+
                 SizedBox(height: 20.0),
-                Text(
-                  'DocScanner',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 5.0),
+
+
                 Text(
                     'DocScanner is a simple open sourced Document scanner App, DocScanner is built to make scanning documents convenient for the users. This App contains absolutely zero Ads. '),
                 SizedBox(height: 15.0),
@@ -62,8 +52,7 @@ class AboutPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 5.0),
-                Text('- Take image and convert to pdf '
-                    '- Print and share pdf '),
+                Text('- Take image and convert to pdf\n- Grey filter mode\n- Crop, rotate images after capture\n- Print and share pdf '),
                 SizedBox(height: 15.0),
                 Text(
                   'Version',
@@ -72,12 +61,31 @@ class AboutPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 5.0),
-                Text('v1.0.0-Beta-1'),
+                Text('v1.0.0-Beta'),
+                SizedBox(height: 15.0,),
+
+                SizedBox(height: 15,),
+                Align(
+                    child: RaisedButton(
+                    onPressed: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MainFetchData(),
+                    ),
+                  );
+
+                },child: const Text('see contributors', style: TextStyle(fontSize: 15)),
+
+                ),),
               ],
             ),
           ],
         ),
       ),
     );
+
   }
+
 }
+
