@@ -2,14 +2,19 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'dart:async';
+import 'package:flutter/services.dart';
 
+import 'package:DocScanner/custom_widgets/ExitPopUp.dart';
+import 'package:DocScanner/custom_widgets/grdview.dart';
 import 'package:DocScanner/screens/image_cropper.dart';
+import 'package:DocScanner/screens/take_picture/bugreportmail.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 import 'package:image/image.dart' as imgLib;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:get/get.dart';
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
@@ -31,7 +36,7 @@ class TakePictureScreenState extends State<TakePictureScreen>
   final bugController = TextEditingController();
   double size = 14;
   double _currentOpacity = 0.0;
-  bool gridviewstate = false;
+  var gridviewstate = false;
   bool done = false;
   bool isGrayScale = false;
   // int count = 0;
@@ -40,9 +45,7 @@ class TakePictureScreenState extends State<TakePictureScreen>
   Color selectedColor = Colors.black;
 
   void showgrid() {
-    setState(() {
-      gridviewstate = !gridviewstate;
-    });
+    gridviewstate = !gridviewstate;
   }
 
   @override
@@ -70,6 +73,9 @@ class TakePictureScreenState extends State<TakePictureScreen>
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     //showing popup message exiting app
     return WillPopScope(
       // ignore: missing_return
@@ -77,84 +83,7 @@ class TakePictureScreenState extends State<TakePictureScreen>
         showModalBottomSheet(
             context: context,
             builder: (context) {
-              return Container(
-                decoration: BoxDecoration(color: Colors.transparent),
-                height: 100,
-                width: double.infinity,
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                  child: Container(
-                    height: 100,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(25),
-                            topRight: Radius.circular(25)),
-                        color: Colors.white),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(22, 20, 10, 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Do you really want to exit?",
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                decoration: TextDecoration.none),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: 5,
-                              ),
-                              FlatButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20))),
-                                color: Colors.black,
-                                child: Text(
-                                  "Cancel",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.white,
-                                      letterSpacing: 1),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 25,
-                              ),
-                              FlatButton(
-                                onPressed: () {
-                                  exit(0);
-                                },
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20))),
-                                color: Colors.white30,
-                                child: Text(
-                                  "Yes",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      letterSpacing: 1,
-                                      color: Colors.black),
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              );
+              return exitPopUp(context);
             });
       },
 
@@ -186,6 +115,7 @@ class TakePictureScreenState extends State<TakePictureScreen>
                   ),
 
                   //reset message center of screen animation
+
                   AnimatedSize(
                     vsync: this,
                     //curve: Curves.easeOut,
@@ -198,7 +128,7 @@ class TakePictureScreenState extends State<TakePictureScreen>
                               fontWeight: FontWeight.bold, fontSize: size)),
                     ),
                   ),
-                  if (gridviewstate) gridview //Add grid view
+                  if (gridviewstate) gridView()
                 ],
               );
             } else {
@@ -233,7 +163,7 @@ class TakePictureScreenState extends State<TakePictureScreen>
                       size = 14;
                     });
                   });
-                  // count = 0;
+                  //count = 0;
                 });
               },
               child: FloatingActionButton(
@@ -270,7 +200,7 @@ class TakePictureScreenState extends State<TakePictureScreen>
                               imgLib.decodeImage(value);
                           imgLib.Image grayImage =
                               imgLib.grayscale(originalImage);
-                          grayImage = imgLib.copyRotate(grayImage, 90);
+                          grayImage = imgLib.copyRotate(grayImage, 0);
                           File(path)
                               .writeAsBytesSync(imgLib.encodePng(grayImage));
                         }
@@ -415,58 +345,7 @@ class TakePictureScreenState extends State<TakePictureScreen>
                   ),
                 ),
 
-                //TODO: OCR TOOL
-                Expanded(
-                  child: IconButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Dialog(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    20.0)), //this right here
-                            child: Container(
-                              height: 200,
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    TextField(
-                                      decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          labelText: 'Report Bug'),
-                                      controller: bugController,
-                                    ),
-                                    SizedBox(
-                                      width: 320.0,
-                                      child: RaisedButton(
-                                          onPressed: () => _sendBugReportMail(
-                                              bugController.text),
-                                          child: Text(
-                                            "Report",
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                          ),
-                                          color: Colors.black),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                    icon: Icon(
-                      Icons.bug_report,
-                      color: Colors.black,
-                      size: 35,
-                    ),
-                  ),
-                ),
+                BugReportMail()
               ],
             ),
           ),
@@ -476,69 +355,5 @@ class TakePictureScreenState extends State<TakePictureScreen>
         ),
       ),
     );
-  }
-}
-
-Widget gridview = Stack(
-  children: <Widget>[
-    Container(
-      decoration: BoxDecoration(border: Border.all(width: 0)),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  right: BorderSide(width: 0, color: Colors.white),
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Container(),
-          ),
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  left: BorderSide(width: 0, color: Colors.white),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-    Container(
-      child: Column(
-        children: <Widget>[
-          Expanded(
-              child: Container(
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(width: 0, color: Colors.white),
-              ),
-            ),
-          )),
-          Expanded(child: Container()),
-          Expanded(
-              child: Container(
-            decoration: BoxDecoration(
-              border: Border(
-                top: BorderSide(width: 0, color: Colors.white),
-              ),
-            ),
-          )),
-        ],
-      ),
-    ),
-  ],
-);
-_sendBugReportMail(String bug) async {
-  var url = 'mailto:amanzishan.az@gmail.com?subject=Bug&body=$bug';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
   }
 }

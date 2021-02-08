@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-
-import './screens/take_picture.dart';
+import 'package:flutter/services.dart';
+import 'screens/take_picture/take_picture.dart';
 
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
@@ -14,6 +14,10 @@ Future<void> main() async {
 
   // Get a specific camera from the list of available cameras.
   final firstCamera = cameras.first;
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
 
   runApp(
     MaterialApp(
