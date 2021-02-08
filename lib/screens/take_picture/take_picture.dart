@@ -2,6 +2,9 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'dart:async';
+import 'package:DocScanner/controller/takepicture_controller.dart';
+import 'package:DocScanner/screens/take_picture/filter.dart';
+import 'package:DocScanner/screens/take_picture/gridView.dart';
 import 'package:flutter/services.dart';
 
 import 'package:DocScanner/custom_widgets/ExitPopUp.dart';
@@ -31,22 +34,14 @@ class TakePictureScreen extends StatefulWidget {
 
 class TakePictureScreenState extends State<TakePictureScreen>
     with SingleTickerProviderStateMixin {
+  final TakePikcController controller = Get.put(TakePikcController());
+
   CameraController _controller;
   Future<void> _initializeControllerFuture;
   final bugController = TextEditingController();
   double size = 14;
   double _currentOpacity = 0.0;
-  var gridviewstate = false;
-  bool done = false;
-  bool isGrayScale = false;
-  // int count = 0;
   List<String> images = List<String>();
-
-  Color selectedColor = Colors.black;
-
-  void showgrid() {
-    gridviewstate = !gridviewstate;
-  }
 
   @override
   void initState() {
@@ -96,40 +91,44 @@ class TakePictureScreenState extends State<TakePictureScreen>
           future: _initializeControllerFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              return Stack(
-                alignment: Alignment.center,
-                children: <Widget>[
-                  // If the Future is complete, display the preview.
+              return GetBuilder<TakePikcController>(
+                init: TakePikcController(),
+                builder: (_) {
+                  return Stack(
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                      // If the Future is complete, display the preview.
+                      AnimatedSwitcher(
+                        duration: Duration(milliseconds: 170),
+                        child: _.isGrayScale
+                            ? ColorFiltered(
+                                colorFilter: ColorFilter.mode(
+                                    Colors.grey, BlendMode.saturation),
+                                key: ValueKey("grayscaleFalse"),
+                                child: CameraPreview(_controller))
+                            : Container(
+                                key: ValueKey("grayscaleTrue"),
+                                child: CameraPreview(_controller)),
+                      ),
 
-                  AnimatedSwitcher(
-                    duration: Duration(milliseconds: 170),
-                    child: isGrayScale
-                        ? ColorFiltered(
-                            colorFilter: ColorFilter.mode(
-                                Colors.grey, BlendMode.saturation),
-                            key: ValueKey("grayscaleFalse"),
-                            child: CameraPreview(_controller))
-                        : Container(
-                            key: ValueKey("grayscaleTrue"),
-                            child: CameraPreview(_controller)),
-                  ),
+                      //reset message center of screen animation
 
-                  //reset message center of screen animation
-
-                  AnimatedSize(
-                    vsync: this,
-                    //curve: Curves.easeOut,
-                    duration: Duration(milliseconds: 500),
-                    child: AnimatedOpacity(
-                      opacity: _currentOpacity,
-                      duration: Duration(milliseconds: 1000),
-                      child: Text('reset successful',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: size)),
-                    ),
-                  ),
-                  if (gridviewstate) gridView()
-                ],
+                      AnimatedSize(
+                        vsync: this,
+                        //curve: Curves.easeOut,
+                        duration: Duration(milliseconds: 500),
+                        child: AnimatedOpacity(
+                          opacity: _currentOpacity,
+                          duration: Duration(milliseconds: 1000),
+                          child: Text('reset successful',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: size)),
+                        ),
+                      ),
+                      if (_.gridView) gridView()
+                    ],
+                  );
+                },
               );
             } else {
               // Otherwise, display a loading indicator.
@@ -149,7 +148,6 @@ class TakePictureScreenState extends State<TakePictureScreen>
               onLongPress: () {
                 // reseting captured images
                 setState(() {
-                  done = false;
                   images.clear();
                   size = 24;
                   _currentOpacity = 1.0;
@@ -166,60 +164,60 @@ class TakePictureScreenState extends State<TakePictureScreen>
                   //count = 0;
                 });
               },
-              child: FloatingActionButton(
-                backgroundColor: Colors.lightBlueAccent,
+              child: GetBuilder<TakePikcController>(
+                init: TakePikcController(),
+                builder: (_) {
+                  return FloatingActionButton(
+                    backgroundColor: Colors.lightBlueAccent,
 
-                child: Icon(
-                  Icons.camera_alt,
-                  color: Colors.white,
-                ),
-                // Provide an onPressed callback.
-                onPressed: () async {
-                  // Take the Picture in a try / catch block. If anything goes wrong,
-                  // catch the error.
-                  try {
-                    // Ensure that the camera is initialized.
+                    child: Icon(
+                      Icons.camera_alt,
+                      color: Colors.white,
+                    ),
+                    // Provide an onPressed callback.
+                    onPressed: () async {
+                      // Take the Picture in a try / catch block. If anything goes wrong,
+                      // catch the error.
+                      try {
+                        // Ensure that the camera is initialized.
 
-                    await _initializeControllerFuture;
+                        await _initializeControllerFuture;
 
-                    // Construct the path where the image should be saved using the
-                    // pattern package.
-                    final path = join(
-                      // Store the picture in the temp directory.
-                      // Find the temp directory using the `path_provider` plugin.
-                      (await getTemporaryDirectory()).path,
-                      '${DateTime.now()}.png',
-                    );
+                        // Construct the path where the image should be saved using the
+                        // pattern package.
+                        final path = join(
+                          // Store the picture in the temp directory.
+                          // Find the temp directory using the `path_provider` plugin.
+                          (await getTemporaryDirectory()).path,
+                          '${DateTime.now()}.png',
+                        );
 
-                    // Attempt to take a picture and log where it's been saved.
-                    await _controller.takePicture(path).then((value) {
-                      print(File(path).existsSync());
-                      File(path).readAsBytes().then((value) {
-                        if (isGrayScale) {
-                          imgLib.Image originalImage =
-                              imgLib.decodeImage(value);
-                          imgLib.Image grayImage =
-                              imgLib.grayscale(originalImage);
-                          grayImage = imgLib.copyRotate(grayImage, 0);
-                          File(path)
-                              .writeAsBytesSync(imgLib.encodePng(grayImage));
-                        }
-                      });
-                    });
+                        // Attempt to take a picture and log where it's been saved.
+                        await _controller.takePicture(path).then((value) {
+                          print(File(path).existsSync());
+                          File(path).readAsBytes().then((value) {
+                            if (_.isGrayScale) {
+                              imgLib.Image originalImage =
+                                  imgLib.decodeImage(value);
+                              imgLib.Image grayImage =
+                                  imgLib.grayscale(originalImage);
+                              grayImage = imgLib.copyRotate(grayImage, 0);
+                              File(path).writeAsBytesSync(
+                                  imgLib.encodePng(grayImage));
+                            }
+                          });
+                        });
 
-                    images.add(path);
-                    if (images.isNotEmpty) {
-                      setState(() {
-                        done = true;
-                        // count++;
-                      });
-                    }
-                  } catch (e) {
-                    // If an error occurs, log the error to the console.
-                    print(e);
-                  }
+                        images.add(path);
+                        setState(() {});
+                      } catch (e) {
+                        // If an error occurs, log the error to the console.
+                        print(e);
+                      }
+                    },
+                    elevation: 2.0,
+                  );
                 },
-                elevation: 2.0,
               ),
             ),
           ),
@@ -240,41 +238,8 @@ class TakePictureScreenState extends State<TakePictureScreen>
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Expanded(
-                  child: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        isGrayScale = !isGrayScale;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.filter_b_and_w,
-                      color: Colors.black,
-                      size: 30,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.grid_on,
-                      size: 30,
-                    ),
-                    color: selectedColor,
-                    onPressed: () => {
-                      showgrid(),
-                      setState(
-                        () {
-                          if (selectedColor == Colors.blue) {
-                            selectedColor = Colors.black;
-                          } else {
-                            selectedColor = Colors.blue;
-                          }
-                        },
-                      ),
-                    },
-                  ),
-                ),
+                Filter(),
+                Gridvieww(),
                 Expanded(
                   child: Container(
                       alignment: Alignment.center,
