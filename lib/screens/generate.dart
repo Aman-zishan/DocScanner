@@ -80,7 +80,6 @@ class _GeneratePageState extends State<GeneratePage> {
                         SizedBox(width: 20.0),
                         CustomButton(
                           onPressed: () {
-
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -147,27 +146,32 @@ class _GeneratePageState extends State<GeneratePage> {
                           title: 'Bug report',
                           icon: Icons.bug_report,
                         ),
-
                       ],
                     ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child:
+                    Spacer(),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 30,left: 10,right: 10,top: 200),
-
-                      child: Column(children: [
-                        Text("This project is licensed under GPL-3.0 open source license\n ",textAlign: TextAlign.justify,),
-                        Text("© copyright Aman Zishan", textAlign: TextAlign.justify,)
-                      ],)
-
-                    ),),
+                        padding: const EdgeInsets.all(30),
+                        child: Column(
+                          children: [
+                            Text(
+                              "This project is licensed under GPL-3.0 open source license\n ",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                letterSpacing: 0.5,
+                                wordSpacing: 1,
+                              ),
+                            ),
+                            Text(
+                              "© copyright Aman Zishan",
+                              textAlign: TextAlign.justify,
+                            )
+                          ],
+                        )),
                   ],
                 )
               : Center(child: CircularProgressIndicator()),
         ),
       ),
-
     );
   }
 
@@ -185,14 +189,11 @@ class _GeneratePageState extends State<GeneratePage> {
         pdf: pdf.document, image: FileImage(file));
 
     pdf.addPage(pw.Page(build: (pw.Context context) {
-
       return pw.Center(
-
           child: pw.Image(
-              image,
-              fit: pw.BoxFit.fill,
-          ));
-
+        image,
+        fit: pw.BoxFit.fill,
+      ));
     }));
     setState(() {
       if (imageUrl != '') doneProcessing = true;
