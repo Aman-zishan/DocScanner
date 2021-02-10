@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:DocScanner/controller/takepicture_controller.dart';
 import 'package:DocScanner/screens/take_picture/filter.dart';
 import 'package:DocScanner/screens/take_picture/gridView.dart';
+import 'package:DocScanner/screens/take_picture/submit.dart';
 import 'package:flutter/services.dart';
 
 import 'package:DocScanner/custom_widgets/ExitPopUp.dart';
@@ -41,7 +42,7 @@ class TakePictureScreenState extends State<TakePictureScreen>
   final bugController = TextEditingController();
   double size = 14;
   double _currentOpacity = 0.0;
-  List<String> images = List<String>();
+  var images = [].obs;
 
   @override
   void initState() {
@@ -147,7 +148,7 @@ class TakePictureScreenState extends State<TakePictureScreen>
               highlightColor: Colors.red,
               onLongPress: () {
                 // reseting captured images
-                setState(() {
+                if (images.isNotEmpty) {
                   images.clear();
                   size = 24;
                   _currentOpacity = 1.0;
@@ -161,8 +162,8 @@ class TakePictureScreenState extends State<TakePictureScreen>
                       size = 14;
                     });
                   });
-                  //count = 0;
-                });
+                  setState(() {});
+                }
               },
               child: GetBuilder<TakePikcController>(
                 init: TakePikcController(),
@@ -240,65 +241,7 @@ class TakePictureScreenState extends State<TakePictureScreen>
               children: <Widget>[
                 Filter(),
                 Gridvieww(),
-                Expanded(
-                  child: Container(
-                      alignment: Alignment.center,
-                      child: images.length > 0
-                          ? Padding(
-                              padding: const EdgeInsets.only(top: 30),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  IconButton(
-                                    icon: Icon(
-                                      Icons.done,
-                                      color: Colors.green,
-                                    ),
-                                    iconSize: 40,
-                                    onPressed: () async {
-                                      // If the picture was taken, display it on a new screen.
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //     builder: (context) =>
-                                      //         GeneratePage(imagePath: images),
-                                      //   ),
-                                      // );
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              CropperPage(imagePath: images),
-                                        ),
-                                      );
-                                      setState(() {});
-                                    },
-                                  ),
-                                  AnimatedSwitcher(
-                                    duration: Duration(milliseconds: 170),
-                                    child: Container(
-                                      key: ValueKey(images.length),
-                                      child: Center(
-                                          child:
-                                              Text(images.length.toString())),
-                                      width: 17,
-                                      height: 17,
-                                      decoration: BoxDecoration(
-                                          color: Colors.green,
-                                          shape: BoxShape.circle),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          : Icon(
-                              Icons.done,
-                              color: Colors.black,
-                              size: 30,
-                            )),
-                ),
-                //Expanded(child: SizedBox(width: 20.0)),
-
+                Submit(images: images),
                 Expanded(
                   child: IconButton(
                     onPressed: () => null,
@@ -309,7 +252,6 @@ class TakePictureScreenState extends State<TakePictureScreen>
                     ),
                   ),
                 ),
-
                 BugReportMail()
               ],
             ),
