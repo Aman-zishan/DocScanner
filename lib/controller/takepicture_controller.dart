@@ -5,9 +5,15 @@ class TakePikcController extends GetxController {
   bool isGrayScale = false;
   bool gridView = false;
   Color selectedColor = Colors.black;
+  Color filtericonColor = Colors.black;
 
   void filter() {
     isGrayScale = !isGrayScale;
+    if (filtericonColor == Colors.blue) {
+      filtericonColor = Colors.black;
+    } else {
+      filtericonColor = Colors.blue;
+    }
     update();
   }
 

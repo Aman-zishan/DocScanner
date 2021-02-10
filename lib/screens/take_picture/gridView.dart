@@ -8,10 +8,6 @@ class Gridvieww extends StatelessWidget {
 
   var gridviewstate = false;
 
-  void showgrid() {
-    controller.gridview();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -24,9 +20,7 @@ class Gridvieww extends StatelessWidget {
               size: 30,
             ),
             color: _.selectedColor,
-            onPressed: () => {
-              showgrid(),
-            },
+            onPressed: () => controller.gridview(),
           );
         },
       ),

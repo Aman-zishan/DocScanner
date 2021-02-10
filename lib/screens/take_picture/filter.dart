@@ -7,16 +7,20 @@ class Filter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: IconButton(
-        onPressed: () {
-          controller.filter();
-        },
-        icon: Icon(
-          Icons.filter_b_and_w,
-          color: Colors.black,
-          size: 30,
-        ),
-      ),
+      child: GetBuilder<TakePikcController>(
+          init: TakePikcController(),
+          builder: (_) {
+            return IconButton(
+              onPressed: () {
+                controller.filter();
+              },
+              icon: Icon(
+                Icons.filter_b_and_w,
+                color: _.filtericonColor,
+                size: 30,
+              ),
+            );
+          }),
     );
   }
 }
