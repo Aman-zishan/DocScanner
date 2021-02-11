@@ -19,6 +19,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:image/image.dart' as imgLib;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
+import 'package:DocScanner/screens/about.dart';
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
@@ -244,9 +245,14 @@ class TakePictureScreenState extends State<TakePictureScreen>
                 Submit(images: images),
                 Expanded(
                   child: IconButton(
-                    onPressed: () => null,
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AboutPage(),
+                      ),
+                    ),
                     icon: Icon(
-                      Icons.filter,
+                      Icons.info_outlined,
                       color: Colors.black,
                       size: 30,
                     ),

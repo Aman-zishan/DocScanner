@@ -16,12 +16,14 @@
 
 :bird: Flutter App to scan document and share as pdf.
 
-### v1.0.1 expected release : Last week of November
+### Latest release : v1.0.0-Beta
+
 # Downloads:
 
+<a href=""><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" width="15%"></a>
 <a href="https://apt.izzysoft.de/fdroid/index/apk/com.example.DocScanner"><img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" width="15%"></a>
 
-Please do check the [releases](https://github.com/Aman-zishan/DocScanner/releases) for the source code along with APK version.
+Please do check the [releases](https://github.com/Aman-zishan/DocScanner/releases) for the source code along with APK version of earlier versions.
 
 <img alt="GitHub Releases" src="https://img.shields.io/github/downloads/Aman-zishan/DocScanner/total">
 
@@ -57,14 +59,12 @@ Please do check the [releases](https://github.com/Aman-zishan/DocScanner/release
 
 <p align="center">         <img width="25%" height="25%" src="demo/docscanner.gif" ></p>
 
+## v1.0.0-Beta
 
-## This App is under development
+<p align="center"><img width="25%" height="25%" src="demo/doc1.png">         <img width="25%" height="25%" src="demo/doc2.png" >   <img width="25%" height="25%" src="demo/doc3.png">     <img width="25%" height="25%" src="demo/doc4.png" >     <img width="25%" height="25%" src="demo/doc5.png" >  </p>
+
 
 ## Contribution
-
-<p align="center"><img src="https://hacktoberfestswaglist.com/img/Hacktoberfest_20.jpg" width="10%"></p>
-
-Hacktoberfest® is open to everyone in our global community. Whether you’re a developer, student learning to code, event host, or company of any size, you can help drive growth of open source and make positive contributions to an ever-growing community. All backgrounds and skill levels are encouraged to complete the challenge.
 
 Go through the [guidelines](https://github.com/Aman-zishan/DocScanner/blob/master/CONTRIBUTING.md) and feel free to contribute to this open source project!
 
