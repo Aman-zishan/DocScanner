@@ -45,19 +45,6 @@ Please do check the [releases](https://github.com/Aman-zishan/DocScanner/release
 * Edge detection.
 * Bug fixes
 
-## Phase-1
-
-<p align="center"><img width="25%" height="25%" src="demo/1.png">         <img width="25%" height="25%" src="demo/2.png" ></p>
-  
-  
-## Phase-2
-
-<p align="center"><img width="25%" height="25%" src="demo/3.png">         <img width="25%" height="25%" src="demo/4.png" ></p>
-
-
-## Phase-3
-
-<p align="center">         <img width="25%" height="25%" src="demo/docscanner.gif" ></p>
 
 ## v1.0.0-Beta
 
