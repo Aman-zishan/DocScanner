@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'dart:async';
 import 'package:DocScanner/controller/takepicture_controller.dart';
 import 'package:DocScanner/screens/take_picture/filter.dart';
+import 'package:DocScanner/screens/take_picture/gallery.dart';
 import 'package:DocScanner/screens/take_picture/gridView.dart';
 import 'package:DocScanner/screens/take_picture/submit.dart';
 import 'package:flutter/services.dart';
@@ -43,7 +44,7 @@ class TakePictureScreenState extends State<TakePictureScreen>
   final bugController = TextEditingController();
   double size = 14;
   double _currentOpacity = 0.0;
-  var images = [].obs;
+  // var images = [].obs;
 
   @override
   void initState() {
@@ -145,31 +146,32 @@ class TakePictureScreenState extends State<TakePictureScreen>
           width: 70.0,
           child: FittedBox(
             // Inkwell is used for long press method
-            child: InkWell(
-              highlightColor: Colors.red,
-              onLongPress: () {
-                // reseting captured images
-                if (images.isNotEmpty) {
-                  images.clear();
-                  size = 24;
-                  _currentOpacity = 1.0;
-                  Timer(Duration(milliseconds: 1100), () {
-                    setState(() {
-                      _currentOpacity = 0.0;
-                    });
-                  });
-                  Timer(Duration(milliseconds: 2200), () {
-                    setState(() {
-                      size = 14;
-                    });
-                  });
-                  setState(() {});
-                }
-              },
-              child: GetBuilder<TakePikcController>(
-                init: TakePikcController(),
-                builder: (_) {
-                  return FloatingActionButton(
+            child: GetBuilder<TakePikcController>(
+              init: TakePikcController(),
+              builder: (_) {
+                return InkWell(
+                  highlightColor: Colors.red,
+                  onLongPress: () {
+                    // reseting captured images
+                    if (_.images.isNotEmpty) {
+                      //images.clear();
+                      controller.clearimage();
+                      size = 24;
+                      _currentOpacity = 1.0;
+                      Timer(Duration(milliseconds: 1100), () {
+                        setState(() {
+                          _currentOpacity = 0.0;
+                        });
+                      });
+                      Timer(Duration(milliseconds: 2200), () {
+                        setState(() {
+                          size = 14;
+                        });
+                      });
+                      setState(() {});
+                    }
+                  },
+                  child: FloatingActionButton(
                     backgroundColor: Colors.lightBlueAccent,
 
                     child: Icon(
@@ -210,17 +212,19 @@ class TakePictureScreenState extends State<TakePictureScreen>
                           });
                         });
 
-                        images.add(path);
-                        setState(() {});
+                        //images.add(path);
+                        // adding pictures
+                        controller.takepicture(path);
+                        //setState(() {});
                       } catch (e) {
                         // If an error occurs, log the error to the console.
                         print(e);
                       }
                     },
                     elevation: 2.0,
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
           ),
         ),
@@ -242,22 +246,13 @@ class TakePictureScreenState extends State<TakePictureScreen>
               children: <Widget>[
                 Filter(),
                 Gridvieww(),
-                Submit(images: images),
-                Expanded(
-                  child: IconButton(
-                    onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AboutPage(),
-                      ),
-                    ),
-                    icon: Icon(
-                      Icons.info_outlined,
-                      color: Colors.black,
-                      size: 30,
-                    ),
-                  ),
+                GetBuilder<TakePikcController>(
+                  init: TakePikcController(),
+                  builder: (_) {
+                    return Submit(images: _.images);
+                  },
                 ),
+                Gallery(),
                 BugReportMail()
               ],
             ),

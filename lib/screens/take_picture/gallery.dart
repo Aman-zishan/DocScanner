@@ -1,24 +1,28 @@
 import 'dart:io';
-
+import 'package:DocScanner/controller/takepicture_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:get/get.dart';
 
+// ignore: must_be_immutable
 class Gallery extends StatelessWidget {
-  imgFromGallery() async {
+  final TakePikcController controller = Get.put(TakePikcController());
+
+  _imgFromGallery() async {
     File image = await ImagePicker.pickImage(
       source: ImageSource.gallery,
     );
-
-    return _image = image;
+    if (image.toString() != 'null') {
+      controller.takepicture(image.path);
+    }
   }
 
   @override
-  File _image;
   Widget build(BuildContext context) {
     return Expanded(
       child: IconButton(
         onPressed: () {
-          imgFromGallery();
+          _imgFromGallery();
         },
         icon: Icon(
           Icons.filter,
