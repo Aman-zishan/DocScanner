@@ -30,20 +30,14 @@ Please do check the [releases](https://github.com/Aman-zishan/DocScanner/release
 
 
 
-## :dart:Done
-
-* Takes picture.
-* Saves the image in temporary location.
-* saves as pdf.
-* share and print option.
-* Process the image to greyscale.
+## :dart:Features
 
 
-## :dart:ToDo
-                                       
-* multiple photo selection.
-* Edge detection.
-* Bug fixes
+* saves as pdf
+* share and print option
+* Filters
+* Grid view
+
 
 
 ## v1.0.0-Beta
