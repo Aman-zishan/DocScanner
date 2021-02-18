@@ -6,6 +6,7 @@ class TakePikcController extends GetxController {
   bool gridView = false;
   Color selectedColor = Colors.black;
   Color filtericonColor = Colors.black;
+  var images = [].obs;
 
   void filter() {
     isGrayScale = !isGrayScale;
@@ -25,5 +26,13 @@ class TakePikcController extends GetxController {
       selectedColor = Colors.blue;
     }
     update();
+  }
+
+  void takepicture(var img) {
+    images.add(img);
+  }
+
+  void clearimage() {
+    images.clear();
   }
 }
