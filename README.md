@@ -20,7 +20,7 @@
 
 # Downloads:
 
-<a href=""><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" width="15%"></a>
+<a href="https://play.google.com/store/apps/details?id=com.icodex.DocScanner"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" width="15%"></a>
 <a href="https://apt.izzysoft.de/fdroid/index/apk/com.example.DocScanner"><img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" width="15%"></a>
 
 Please do check the [releases](https://github.com/Aman-zishan/DocScanner/releases) for the source code along with APK version of earlier versions.
@@ -30,20 +30,14 @@ Please do check the [releases](https://github.com/Aman-zishan/DocScanner/release
 
 
 
-## :dart:Done
-
-* Takes picture.
-* Saves the image in temporary location.
-* saves as pdf.
-* share and print option.
-* Process the image to greyscale.
+## :dart:Features
 
 
-## :dart:ToDo
-                                       
-* multiple photo selection.
-* Edge detection.
-* Bug fixes
+* saves as pdf
+* share and print option
+* Filters
+* Grid view
+
 
 
 ## v1.0.0-Beta
