@@ -11,6 +11,7 @@ class Gallery extends StatelessWidget {
   _imgFromGallery() async {
     File image = await ImagePicker.pickImage(
       source: ImageSource.gallery,
+      imageQuality: 50,
     );
     if (image.toString() != 'null') {
       controller.takepicture(image.path);

@@ -1,4 +1,3 @@
-import 'package:DocScanner/screens/sample.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -10,9 +9,6 @@ class BugReportMail extends StatelessWidget {
     return Expanded(
       child: IconButton(
         onPressed: () {
-          // Navigator.of(context)
-          //     .push(MaterialPageRoute(builder: (context) => MyCustomWidget()));
-
           showDialog(
             context: context,
             builder: (BuildContext context) {

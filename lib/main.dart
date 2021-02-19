@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'package:DocScanner/screens/intro_screen/into_screen.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/take_picture/take_picture.dart';
 
 Future<void> main() async {
@@ -21,7 +23,10 @@ Future<void> main() async {
       home: new SplashScreen(),
       routes: <String, WidgetBuilder>{
         '/TakePictureScreen': (BuildContext context) =>
-            new TakePictureScreen(camera: firstCamera)
+            TakePictureScreen(camera: firstCamera),
+        '/Introscreen': (BuildContext context) => Intro(
+              camera: firstCamera,
+            ),
       },
     ),
   );
@@ -38,8 +43,12 @@ class _SplashScreenState extends State<SplashScreen> {
     return new Timer(_duration, navigationPage);
   }
 
-  void navigationPage() {
-    Navigator.of(context).pushReplacementNamed('/TakePictureScreen');
+  void navigationPage() async {
+    final prefs = await SharedPreferences.getInstance();
+    final myBool = prefs.getBool('my_bool_key') ?? false;
+    myBool
+        ? Navigator.of(context).pushReplacementNamed('/TakePictureScreen')
+        : Navigator.of(context).pushReplacementNamed('/Introscreen');
   }
 
   @override

@@ -36,12 +36,6 @@ class _SubmitState extends State<Submit> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    // widget.images.where((element) => element.)
-    // List <String>jkj = ['1','2','3'];
-    // if (widget.images.isNotEmpty) {
-    //   animationController.forward();
-    // }
-
     return Expanded(
       child: Container(
         alignment: Alignment.center,

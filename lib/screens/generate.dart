@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:ui';
-
 import 'package:DocScanner/custom_widgets/custom_button.dart';
 import 'package:DocScanner/screens/about.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +27,7 @@ class _GeneratePageState extends State<GeneratePage> {
   int totalPage = 1;
   String appDocPath;
   String searchText;
+  String convertedDateTime;
 
   @override
   void initState() {
@@ -38,7 +38,6 @@ class _GeneratePageState extends State<GeneratePage> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-
     return Scaffold(
       // appBar: AppBar(
       //     title: Text(
@@ -188,13 +187,19 @@ class _GeneratePageState extends State<GeneratePage> {
     final PdfImage image = await pdfImageFromImageProvider(
         pdf: pdf.document, image: FileImage(file));
 
-    pdf.addPage(pw.Page(build: (pw.Context context) {
-      return pw.Center(
-          child: pw.Image(
-        image,
-        fit: pw.BoxFit.fill,
-      ));
-    }));
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) {
+          return pw.FullPage(
+              ignoreMargins: false,
+              child: pw.Center(
+                  child: pw.Image(
+                image,
+                //fit: pw.BoxFit.fill,
+              )));
+        },
+      ),
+    );
     setState(() {
       if (imageUrl != '') doneProcessing = true;
     });
