@@ -189,14 +189,11 @@ class _GeneratePageState extends State<GeneratePage> {
 
     pdf.addPage(
       pw.Page(
+        pageFormat: PdfPageFormat.letter,
         build: (pw.Context context) {
-          return pw.FullPage(
-              ignoreMargins: false,
-              child: pw.Center(
-                  child: pw.Image(
-                image,
-                //fit: pw.BoxFit.fill,
-              )));
+          return pw.Center(
+            child: pw.Image(image),
+          );
         },
       ),
     );
@@ -206,7 +203,7 @@ class _GeneratePageState extends State<GeneratePage> {
   }
 
   void _printPdf() {
-    Printing.layoutPdf(onLayout: (PdfPageFormat format) async {
+    Printing.layoutPdf(onLayout: (format) async {
       return pdf.save();
     });
   }
