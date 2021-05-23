@@ -189,23 +189,19 @@ class _GeneratePageState extends State<GeneratePage> {
 
     pdf.addPage(
       pw.Page(
-<<<<<<< HEAD
+
         pageFormat: PdfPageFormat.letter,
-        build: (pw.Context context) {
-          return pw.Center(
-            child: pw.Image(image),
-          );
-=======
         build: (pw.Context context) {
           return pw.FullPage(
               ignoreMargins: false,
               child: pw.Center(
                   child: pw.Image(
-                image,
-                //fit: pw.BoxFit.fill,
-              )));
->>>>>>> ce4f680e762b0764b3921510500c35dda7a071ed
+                    image,
+                    //fit: pw.BoxFit.fill,
+                  )));
+
         },
+
       ),
     );
     setState(() {
